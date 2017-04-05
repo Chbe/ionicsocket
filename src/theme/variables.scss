@@ -36,14 +36,18 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
+$alert-ios-button-text-color: color($colors, secondary);
+$alert-ios-input-border-color: #32db64;
+$alert-ios-input-border: $hairlines-width solid $alert-ios-input-border-color;
 
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+$alert-md-button-text-color: color($colors, secondary);
+$alert-md-input-border-color: #32db64;
+$alert-md-input-border: $hairlines-width solid $alert-md-input-border-color;
 
 
 
