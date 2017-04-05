@@ -1,3 +1,73 @@
 page-page1 {
 
+    .scroll-content {
+        margin-bottom: 5em;
+        margin-top: 3em;
+    }
+
+    .list-md .item-block .item-inner {
+        border-bottom: none;
+    }
+
+    .list-ios .item-block .item-inner {
+        border-bottom: none;
+    }
+
+    .grid {
+        background-color: white;
+    }
+
+    #loginInput {
+        text-align: center;
+        color: white;
+    }
+
+    .loginPage {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: black;
+    }
+
+    .chatPage {
+        height: 100%;
+        margin: 0;
+        overflow-y: auto;
+        width: 100%;
+        float: left;
+        word-wrap: break-word;
+    }
+
+    .loginList {
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+    }
+
+    .usernameItem {
+        background-color: black;
+    }
+
+    .submitItem {
+        background-color: black;
+    }
+
+    #sendMessage {
+        max-width: 20%;
+    }
+
+    #messageCol {
+        max-width: 80%;
+    }
+
+    #messageInput {
+        text-align: left;
+    }
+
+    .messageItem {
+        background-color: white;
+    }
+    
+
 }

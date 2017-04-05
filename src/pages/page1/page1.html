@@ -1,18 +1,59 @@
-<ion-header>
+<ion-header *ngIf="loggedIn">
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Page One</ion-title>
+    <ion-title>Smackerino</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <div class="loginPage" *ngIf="!loggedIn">
+    <form (ngSubmit)="logForm()">
+      <ion-list class="loginList">
+        <ion-item class="usernameItem">
+          <ion-input id="loginInput" [(ngModel)]="username" type="text" placeholder="Choose a nickname..." clearInput="true" name="username"></ion-input>
+        </ion-item>
+        <ion-item class="submitItem">
+          <button ion-button clear block type="submit">Login</button>
+        </ion-item>
+      </ion-list>
+    </form>
+  </div>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-list *ngIf="loggedIn">
+    <div *ngFor="let data of messages">
+      <ion-item *ngIf="username === data.username">
+        <p class="chat-text" item-left>
+          <strong>{{data.username}}: </strong> {{data.message}}
+        </p>
+        <p class="chat-time" item-right>
+          {{data.date | date:'dd/MM/yyyy'}}
+        </p>
+      </ion-item>
+      <ion-item *ngIf="username !== data.username">
+        <p class="chat-text" item-left>
+          <strong>{{data.username}}: </strong> {{data.message}}
+        </p>
+        <p class="chat-time" item-right>
+          {{data.date | date:'dd/MM/yyyy'}}
+        </p>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>
+
+<ion-footer *ngIf="loggedIn">
+  <form #f="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col width-80>
+          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..."></ion-input>
+        </ion-col>
+        <ion-col width-20 center>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="light" full [disabled]="f.valid === false">send</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-footer>
