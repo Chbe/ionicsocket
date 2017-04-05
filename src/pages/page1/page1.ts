@@ -1,6 +1,6 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
 import * as io from 'socket.io-client';
-import { NavController, Content } from 'ionic-angular';
+import { NavController, Content, AlertController } from 'ionic-angular';
 import { LocationTracker } from '../../providers/location-tracker';
 
 @Component({
@@ -30,7 +30,7 @@ export class Page1 {
     '#00FF00', '#008000',
     '#FF00FF', '#808000',
   ];
-  constructor(public navCtrl: NavController, private locationTracker: LocationTracker) {
+  constructor(public navCtrl: NavController, private locationTracker: LocationTracker, private alertCtrl: AlertController) {
     this.socket = io.connect(this.socketHost);
 
     this.zone = new NgZone({ enableLongStackTrace: false });
@@ -39,7 +39,6 @@ export class Page1 {
         console.log(msg);
         msg.timestamp = this.formatDate(msg.timestamp);
         msg.latitude = Math.round(this.getDistance(msg.latitude, msg.longitude) * 10) / 10;
-        console.log("if sats", msg.latitude, this.radius);
         if (msg.latitude <= this.radius) {
           this.messages.push(msg);
           this.content.scrollToBottom();
@@ -126,6 +125,40 @@ export class Page1 {
     this.locationTracker.stopTracking();
   }
 
+  radiusModal() {
+    {
+      let alert = this.alertCtrl.create({
+        title: 'Change radius',
+        message: 'Decide on how far away you want to receive messages from, in meters',
+        inputs: [
+          {
+            name: 'radius',
+            placeholder: 'Change radius...',
+            min: 10,
+            type: 'number'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Save',
+            handler: data => {
+              if (Number(data.radius)) {
+                this.radius = data.radius;
+                console.log(data, data.radius);
+              }
+            }
+          }
+        ]
+      });
+      alert.present();
 
-
+    }
+  }
 }

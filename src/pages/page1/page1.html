@@ -3,7 +3,6 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Smackerino</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -20,7 +19,7 @@
             <ion-icon range-right style="color: white" name="locate"></ion-icon>
           </ion-range>
         </ion-item>
-        <ion-badge color="trans" class="loginList">{{radius}} meter</ion-badge>
+        <ion-badge color="secondary" class="loginList">{{radius}} meter</ion-badge>
         <ion-item class="submitItem">
           <button ion-button block outline color="secondary" type="submit">Login</button>
         </ion-item>
@@ -41,6 +40,14 @@
       </div>
     </div>
   </ion-list>
+
+  <ion-fab right *ngIf="loggedIn">
+    <button ion-fab mini color="trans"><ion-icon name="settings"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab><ion-icon name="home"></ion-icon></button>
+      <button ion-fab (click)="radiusModal()"><ion-icon name="locate"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-footer *ngIf="loggedIn">
