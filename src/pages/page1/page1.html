@@ -14,8 +14,15 @@
         <ion-item class="usernameItem">
           <ion-input id="loginInput" [(ngModel)]="username" type="text" placeholder="Choose a nickname..." clearInput="true" name="username"></ion-input>
         </ion-item>
+        <ion-item class="radiusInput">
+          <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary">
+            <ion-icon range-left small style="color: white" name="locate"></ion-icon>
+            <ion-icon range-right style="color: white" name="locate"></ion-icon>
+          </ion-range>
+        </ion-item>
+        <ion-badge color="trans" class="loginList">{{radius}} meter</ion-badge>
         <ion-item class="submitItem">
-          <button ion-button clear block type="submit">Login</button>
+          <button ion-button block outline color="secondary" type="submit">Login</button>
         </ion-item>
       </ion-list>
     </form>
@@ -23,22 +30,15 @@
 
   <ion-list *ngIf="loggedIn">
     <div *ngFor="let data of messages">
-      <ion-item *ngIf="username === data.username">
-        <p class="chat-text" item-left>
-          <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong> {{data.message}}
-        </p>
-        <p class="chat-time" item-right>
-          {{data.timestamp}}
-        </p>
-      </ion-item>
-      <ion-item *ngIf="username !== data.username">
-        <p class="chat-text" item-left>
-          <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong> {{data.message}}
-        </p>
-        <p class="chat-time" item-right>
-          {{data.timestamp}}
-        </p>
-      </ion-item>
+      <div class="messagesDiv" style="margin-top: 0.5em">
+        <span class="username">
+          <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
+          </span>
+        <span class="">{{data.message}}</span>
+        <span class="timestamp">
+          {{data.latitude}}m away || {{data.timestamp}}
+        </span>
+      </div>
     </div>
   </ion-list>
 </ion-content>
@@ -48,10 +48,10 @@
     <ion-grid>
       <ion-row>
         <ion-col width-80>
-          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..."></ion-input>
+          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..." #input focus="loggedIn"></ion-input>
         </ion-col>
         <ion-col width-20 center>
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="light" full [disabled]="f.valid === false">send</button>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full [disabled]="f.valid === false">send</button>
         </ion-col>
       </ion-row>
     </ion-grid>

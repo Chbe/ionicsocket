@@ -1,8 +1,13 @@
 page-page1 {
 
     .scroll-content {
-        margin-bottom: 5em;
+        margin-bottom: 4em;
         margin-top: 3em;
+        background-color: white;
+    }
+
+    .fixed-content {
+        background-color: black;
     }
 
     .list-md .item-block .item-inner {
@@ -11,6 +16,14 @@ page-page1 {
 
     .list-ios .item-block .item-inner {
         border-bottom: none;
+    }
+
+    .list-ios > .item-block:first-child {
+        border: none;
+    }
+
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+        border: none;
     }
 
     .grid {
@@ -22,11 +35,18 @@ page-page1 {
         color: white;
     }
 
+    .radiusInput {
+        background-color: black;
+    }
+
     .loginPage {
         height: 100%;
         display: flex;
         align-items: center;
         background-color: black;
+        margin-left: -5%;
+        margin-right: -5%;
+        margin-top: -5%;
     }
 
     .chatPage {
@@ -50,7 +70,8 @@ page-page1 {
     }
 
     .submitItem {
-        background-color: black;
+        background-color: transparent;
+        padding-top: 10%
     }
 
     #sendMessage {
@@ -68,6 +89,26 @@ page-page1 {
     .messageItem {
         background-color: white;
     }
-    
 
-}
+    .messageDiv {
+        height: 100%;
+        margin: 0;
+        overflow-y: auto;
+        padding: 10px 20px 10px 20px;
+        width: 70%;
+        float: left;
+        word-wrap: break-word;
+    }
+
+    .username {
+        font-weight: 700;
+        overflow: hidden;
+        padding-right: 15px;
+        text-align: right;
+    }
+
+    .timestamp {
+        float: right;
+        color: gray;
+    }
+ }

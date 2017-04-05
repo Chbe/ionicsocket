@@ -6,8 +6,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 export class LocationTracker {
 
   public watch: any;
-  public lat: number = 0;
-  public lng: number = 0;
+  public lat: number;
+  public lng: number;
 
   constructor(public zone: NgZone, private geolocation: Geolocation) {
 
