@@ -38,9 +38,12 @@ export class Page1 {
       this.zone.run(() => {
         console.log(msg);
         msg.timestamp = this.formatDate(msg.timestamp);
-        msg.latitude = Math.round(this.getDistance(msg.latitude, msg.longitude) * 10) /10;
-        this.messages.push(msg);
-        this.content.scrollToBottom();
+        msg.latitude = Math.round(this.getDistance(msg.latitude, msg.longitude) * 10) / 10;
+        console.log("if sats", msg.latitude, this.radius);
+        if (msg.latitude <= this.radius) {
+          this.messages.push(msg);
+          this.content.scrollToBottom();
+        }
       });
     });
 
@@ -56,7 +59,7 @@ export class Page1 {
     };
     this.socket.emit('new message', data);
     data.timestamp = this.formatDate(data.timestamp);
-    data.latitude = Math.round(this.getDistance(data.latitude, data.longitude) * 10) /10;
+    data.latitude = Math.round(this.getDistance(data.latitude, data.longitude) * 10) / 10;
     this.chat = '';
     this.zone.run(() => {
       ;
