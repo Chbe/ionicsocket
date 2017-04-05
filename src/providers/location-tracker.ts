@@ -1,18 +1,40 @@
-import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { Injectable, NgZone } from '@angular/core';
+import { Geolocation } from '@ionic-native/geolocation';
 
-/*
-  Generated class for the LocationTracker provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class LocationTracker {
 
-  constructor(public http: Http) {
-    console.log('Hello LocationTracker Provider');
+  public watch: any;
+  public lat: number = 0;
+  public lng: number = 0;
+
+  constructor(public zone: NgZone, private geolocation: Geolocation) {
+
+  }
+
+  startTracking() {
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
+    this.watch = this.geolocation.watchPosition();
+    this.watch.subscribe((data) => {
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+      this.lat = data.coords.latitude;
+      this.lng = data.coords.longitude;
+    });
+
+  }
+
+  stopTracking() {
+    this.watch.unsubscribe();
   }
 
 }

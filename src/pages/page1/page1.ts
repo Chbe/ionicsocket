@@ -1,6 +1,7 @@
 import { Component, NgZone, ViewChild } from '@angular/core';
 import * as io from 'socket.io-client';
 import { NavController, Content } from 'ionic-angular';
+import { LocationTracker } from '../../providers/location-tracker';
 
 @Component({
   selector: 'page-page1',
@@ -15,8 +16,6 @@ export class Page1 {
   username: string;
   zone: any;
   loggedIn: boolean = false;
-  lat: number = 59.252038;
-  lng: number = 15.244262;
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -28,13 +27,14 @@ export class Page1 {
     '#00FF00', '#008000',
     '#FF00FF', '#808000',
   ];
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private locationTracker: LocationTracker) {
     this.socket = io.connect(this.socketHost);
 
     this.zone = new NgZone({ enableLongStackTrace: false });
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
         console.log(msg);
+        msg.timestamp = this.formatDate(msg.timestamp);
         this.messages.push(msg);
         this.content.scrollToBottom();
       });
@@ -43,14 +43,15 @@ export class Page1 {
   }
 
   chatSend(v) {
-    let data = {
+    let data:any = {
       username: this.username,
       message: v.chatText,
-      latitude: this.lat,
-      longitude: this.lng,
+      latitude: this.locationTracker.lat,
+      longitude: this.locationTracker.lng,
       timestamp: Date.now()
     };
     this.socket.emit('new message', data);
+    data.timestamp = this.formatDate(data.timestamp);
     this.chat = '';
     this.zone.run(() => {
       ;
@@ -62,7 +63,7 @@ export class Page1 {
 
   logForm() {
     this.loggedIn = true;
-
+    this.start();
     this.socket.emit('add user', this.username);
 
   }
@@ -82,6 +83,14 @@ export class Page1 {
     }
     var index = Math.abs(hash % this.COLORS.length);
     return this.COLORS[index];
+  }
+
+  start(){
+    this.locationTracker.startTracking();
+  }
+ 
+  stop(){
+    this.locationTracker.stopTracking();
   }
 
 

@@ -25,18 +25,18 @@
     <div *ngFor="let data of messages">
       <ion-item *ngIf="username === data.username">
         <p class="chat-text" item-left>
-          <strong>{{data.username}}: </strong> {{data.message}}
+          <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong> {{data.message}}
         </p>
         <p class="chat-time" item-right>
-          {{data.date | date:'dd/MM/yyyy'}}
+          {{data.timestamp}}
         </p>
       </ion-item>
       <ion-item *ngIf="username !== data.username">
         <p class="chat-text" item-left>
-          <strong>{{data.username}}: </strong> {{data.message}}
+          <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong> {{data.message}}
         </p>
         <p class="chat-time" item-right>
-          {{data.date | date:'dd/MM/yyyy'}}
+          {{data.timestamp}}
         </p>
       </ion-item>
     </div>
