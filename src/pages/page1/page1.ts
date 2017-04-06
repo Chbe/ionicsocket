@@ -1,4 +1,4 @@
-import { Component, NgZone, ViewChild } from '@angular/core';
+import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import * as io from 'socket.io-client';
 import { NavController, Content, AlertController, ToastController } from 'ionic-angular';
 import { LocationTracker } from '../../providers/location-tracker';
@@ -10,6 +10,7 @@ import { LocationTracker } from '../../providers/location-tracker';
 export class Page1 {
   @ViewChild(Content) content: Content;
   @ViewChild('input') myInput;
+  @ViewChild('myElement') myElement: ElementRef;
   messages: any = [];
   socketHost: string = "https://androidserverapp.herokuapp.com/";
   socket: any;
@@ -19,6 +20,7 @@ export class Page1 {
   loggedIn: boolean = false;
   radius: number = 200;
   distance: any;
+  elementt: any = 0;
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -68,6 +70,7 @@ export class Page1 {
     this.zone.run(() => {
       ;
       this.messages.push(data);
+      console.log(this.messages);
       this.content.scrollToBottom();
     });
 
