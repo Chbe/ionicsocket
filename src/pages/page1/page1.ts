@@ -49,7 +49,7 @@ export class Page1 {
         console.log("distance: ", msg.latitude, "radius: ", this.radius);
         if (msg.latitude <= this.radius) {
           this.messages.push(msg);
-          this.content.scrollToBottom();
+          this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
         }
       });
     });
@@ -70,8 +70,7 @@ export class Page1 {
     this.zone.run(() => {
       ;
       this.messages.push(data);
-      console.log(this.messages);
-      this.content.scrollToBottom();
+      this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
     });
 
   }
