@@ -27,8 +27,10 @@ export class LocationTracker {
       // data can be a set of coordinates, or an error (if an error occurred).
       // data.coords.latitude
       // data.coords.longitude
-      this.lat = data.coords.latitude;
-      this.lng = data.coords.longitude;
+      if (data.coords.latitude !== undefined) {
+        this.lat = data.coords.latitude;
+        this.lng = data.coords.longitude;
+      }
     });
 
   }
