@@ -44,7 +44,8 @@
         <span class="timestampThem" *ngIf="data.username !== username">{{data.latitude}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word;">{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent($event)"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
       </div>
@@ -54,7 +55,8 @@
   <ion-fab right *ngIf="loggedIn">
     <button ion-fab mini color="trans"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
-      <button ion-fab><ion-icon name="home"></ion-icon></button>
+      <button ion-fab (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab (click)="chooseImageFromGallery()"><ion-icon name="image"></ion-icon></button>
       <button ion-fab (click)="radiusModal()"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
@@ -64,7 +66,15 @@
   <form #f="ngForm">
     <ion-grid>
       <ion-row>
-        <ion-col width-80>
+        <ion-col width-80 *ngIf="!base64Image">
+          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+        </ion-col>
+        <ion-col width-80 *ngIf="base64Image">
+          <ion-item>
+            <ion-thumbnail item-left>
+              <img [src]="base64Image">
+            </ion-thumbnail>
+          </ion-item>
           <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..." #input focus="loggedIn"></ion-input>
         </ion-col>
         <ion-col width-20 center>

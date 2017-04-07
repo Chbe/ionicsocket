@@ -2,10 +2,12 @@ import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import * as io from 'socket.io-client';
 import { NavController, Content, AlertController, ToastController } from 'ionic-angular';
 import { LocationTracker } from '../../providers/location-tracker';
+import { Camera } from '@ionic-native/camera';
 
 @Component({
   selector: 'page-page1',
-  templateUrl: 'page1.html'
+  templateUrl: 'page1.html',
+  providers: [Camera]
 })
 export class Page1 {
   @ViewChild(Content) content: Content;
@@ -15,12 +17,15 @@ export class Page1 {
   socketHost: string = "https://androidserverapp.herokuapp.com/";
   socket: any;
   chat: any;
+  base64Image: string = undefined;
   username: string;
   zone: any;
   loggedIn: boolean = false;
   radius: number = 200;
   distance: any;
   elementt: any = 0;
+  chatImgMe: string = null;
+  chatImgThem: string = null;
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -32,8 +37,8 @@ export class Page1 {
     '#00FF00', '#008000',
     '#FF00FF', '#808000',
   ];
-  constructor(public navCtrl: NavController, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController) {
-    
+  constructor(public navCtrl: NavController, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera) {
+
   }
 
   ionViewDidLoad() {
@@ -60,11 +65,17 @@ export class Page1 {
   }
 
   chatSend(v) {
+    var img = null;
+    if(this.base64Image !== undefined) {
+      img = this.base64Image;
+    }
+
     let data: any = {
       username: this.username,
       message: v.chatText,
       latitude: this.locationTracker.lat,
       longitude: this.locationTracker.lng,
+      image: img,
       timestamp: Date.now()
     };
     this.socket.emit('new message', data);
@@ -75,6 +86,7 @@ export class Page1 {
       ;
       this.messages.push(data);
       this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+      this.base64Image = undefined;
     });
 
   }
@@ -84,9 +96,11 @@ export class Page1 {
       this.loggedIn = true;
       this.socket.emit('add user', this.username);
 
-      setTimeout(() => {
-        this.myInput.setFocus();
-      }, 150);
+      if (this.myInput !== undefined) {
+        setTimeout(() => {
+          this.myInput.setFocus();
+        }, 150);
+      }
     }
     else {
       var self = this;
@@ -150,6 +164,39 @@ export class Page1 {
 
   stop() {
     this.locationTracker.stopTracking();
+  }
+
+  pressEvent(e) {
+    console.log("pressed");
+  }
+
+  takePicture() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.DATA_URL,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      saveToPhotoAlbum: true
+
+    }).then((imageData) => {
+      this.base64Image = "data:image/jpeg;base64," + imageData;
+    }, (err) => {
+      console.log(err);
+    });
+
+  }
+
+  chooseImageFromGallery() {
+    this.camera.getPicture({
+      destinationType: this.camera.DestinationType.DATA_URL,
+      targetWidth: 1000,
+      targetHeight: 1000,
+      sourceType: 0
+
+    }).then((imageData) => {
+      this.base64Image = "data:image/jpeg;base64," + imageData;
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   radiusModal() {

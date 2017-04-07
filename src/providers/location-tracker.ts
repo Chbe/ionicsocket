@@ -1,5 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import 'rxjs';
 
 
 
@@ -23,16 +24,13 @@ export class LocationTracker {
       console.log('Error getting location', error);
     });
 
-    this.watch = this.geolocation.watchPosition();
-    this.watch.subscribe((data) => {
-      // data can be a set of coordinates, or an error (if an error occurred).
-      // data.coords.latitude
-      // data.coords.longitude
-      if (data.coords.latitude !== undefined) {
-        this.lat = data.coords.latitude;
-        this.lng = data.coords.longitude;
-      }
-    });
+    this.watch = this.geolocation.watchPosition({ enableHighAccuracy: true })
+      .filter((p) => p.coords !== undefined) //Filter Out Errors
+      .subscribe(position => {
+        console.log(position.coords.longitude + ' ' + position.coords.latitude);
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+      });
 
   }
 
