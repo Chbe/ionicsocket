@@ -33,7 +33,11 @@ export class Page1 {
     '#FF00FF', '#808000',
   ];
   constructor(public navCtrl: NavController, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+    
+  }
 
+  ionViewDidLoad() {
+    console.log(this.content);
   }
 
   ngOnInit() {

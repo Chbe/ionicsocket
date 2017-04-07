@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 
 
+
 @Injectable()
 export class LocationTracker {
 

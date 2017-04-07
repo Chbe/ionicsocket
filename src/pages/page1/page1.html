@@ -27,6 +27,10 @@
     </form>
   </div>
 
+  <ion-footer *ngIf="!loggedIn" class="myFooter">
+
+  </ion-footer>
+
   <ion-list *ngIf="loggedIn" style="margin-top: 5em; margin-bottom: 8em;">
     <div *ngFor="let data of messages" style="margin-top: 1.5em;">
       <div class="messagesDiv">
