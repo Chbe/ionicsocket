@@ -4,6 +4,11 @@ page-page1 {
         padding-bottom: 20%;
     }
 
+    .loginForm {
+        margin-bottom: 20%;
+        margin-top: 35%;
+    }
+
     .item-md {
         background-color: transparent;
     }
@@ -37,6 +42,18 @@ page-page1 {
         color: white;
     }
 
+    .input-md[clearInput] .text-input {
+        padding-right: 30px;
+        border: 1px solid rgb(50, 219, 100);
+        border-radius: 10px;
+    }
+
+    .input-ios[clearInput] .text-input {
+        padding-right: 30px;
+        border: 1px solid rgb(50, 219, 100);
+        border-radius: 10px;
+    }
+
     .radiusInput {
         background-color: black;
     }
@@ -62,10 +79,7 @@ page-page1 {
         margin-right: -50%;
         transform: translate(-50%, -50%);
         position: absolute;
-    }
-
-    .usernameItem {
-        background-color: black;
+        width: 100%;
     }
 
     .submitItem {
@@ -182,7 +196,7 @@ page-page1 {
 	    position:relative;
     	padding:10px 20px;
     	color:white; 
-    	background:#0B93F6;
+    	background:#32db64;
     	border-radius:25px;
         margin-right: 1em;
         margin-left: 1em;
@@ -197,7 +211,7 @@ page-page1 {
 	    	bottom:-2px;
 	    	right:-7px;
 	    	height:20px;
-	    	border-right:20px solid #0B93F6;
+	    	border-right:20px solid #32db64;
 	    	border-bottom-left-radius: 16px 14px;
 	    	-webkit-transform:translate(0, -2px);
     	}

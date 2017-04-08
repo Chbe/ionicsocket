@@ -8,27 +8,24 @@
 
 <ion-content>
   <div class="loginPage" *ngIf="!loggedIn">
-    <form (ngSubmit)="logForm()">
-      <ion-list class="loginList">
-        <ion-item class="usernameItem">
-          <ion-input id="loginInput" [(ngModel)]="username" type="text" placeholder="Choose a nickname..." clearInput="true" name="username"></ion-input>
-        </ion-item>
-        <ion-item class="radiusInput">
-          <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary">
-            <ion-icon range-left small style="color: white" name="locate"></ion-icon>
-            <ion-icon range-right style="color: white" name="locate"></ion-icon>
-          </ion-range>
-        </ion-item>
-        <ion-badge color="secondary" class="loginList">{{radius}} meter</ion-badge>
-        <ion-item class="submitItem">
-          <button ion-button block outline color="secondary" type="submit">Login</button>
-        </ion-item>
-      </ion-list>
-    </form>
+    <div class="loginForm">
+      <form (ngSubmit)="logForm()">
+        <ion-list class="loginList">
+          <ion-input id="loginInput" [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..." clearInput="true" name="username"></ion-input>
+          <ion-item class="radiusInput">
+            <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary" style="width: 90%; margin-top: 3vh;">
+              <ion-icon range-left small style="color: white" name="locate"></ion-icon>
+              <ion-icon range-right style="color: white" name="locate"></ion-icon>
+            </ion-range>
+          </ion-item>
+          <ion-badge color="secondary" class="loginList" style="width: initial;">{{radius}} meter</ion-badge>
+        </ion-list>
+      </form>
+    </div>
   </div>
 
-  <ion-footer *ngIf="!loggedIn" class="myFooter">
-
+  <ion-footer *ngIf="!loggedIn" class="myFooter" padding>
+    <button ion-button block outline color="secondary" type="submit" (click)="logForm()" style="height: 5em; width: 100%; margin-top: 5vh;">Login</button>
   </ion-footer>
 
   <ion-list *ngIf="loggedIn" style="margin-top: 5em; margin-bottom: 8em;">
