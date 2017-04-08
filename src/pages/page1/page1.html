@@ -9,9 +9,10 @@
 <ion-content>
   <div class="loginPage" *ngIf="!loggedIn">
     <div class="loginForm">
-      <form (ngSubmit)="logForm()">
+      <form (ngSubmit)="logForm()" id="loginFormId">
         <ion-list class="loginList">
-          <ion-input id="loginInput" [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..." clearInput="true" name="username"></ion-input>
+          <ion-input id="loginInput" autocomplete="on" autocapitalize=words [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..."
+            clearInput="true" name="username"></ion-input>
           <ion-item class="radiusInput">
             <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary" style="width: 90%; margin-top: 3vh;">
               <ion-icon range-left small style="color: white" name="locate"></ion-icon>
@@ -25,7 +26,7 @@
   </div>
 
   <ion-footer *ngIf="!loggedIn" class="myFooter" padding>
-    <button ion-button block outline color="secondary" type="submit" (click)="logForm()" style="height: 5em; width: 100%; margin-top: 5vh;">Login</button>
+    <button ion-button block outline color="secondary" type="submit" form="loginFormId" (click)="logForm()" style="height: 5em; width: 100%; margin-top: 5vh;">Login</button>
   </ion-footer>
 
   <ion-list *ngIf="loggedIn" style="margin-top: 5em; margin-bottom: 8em;">
@@ -36,16 +37,25 @@
           <span class="username">
           <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
           </span>
-          <span class="" style="word-wrap: break-word;">{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent()" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampThem" *ngIf="data.username !== username">{{data.latitude}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent($event)"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent()" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
       </div>
+
+      <div class="image-container" [ngClass]="{'open': showImage}">
+        <div>
+          <img width="1000" height="1000" src="{{data.image}}">
+        </div>
+      </div>
+      <div class="overlay" [ngClass]="{'open': showImage}"></div>
+
     </div>
   </ion-list>
 
@@ -64,7 +74,9 @@
     <ion-grid>
       <ion-row>
         <ion-col width-80 *ngIf="!base64Image">
-          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+          <ion-item>
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+          </ion-item>
         </ion-col>
         <ion-col width-80 *ngIf="base64Image">
           <ion-item>
@@ -72,10 +84,13 @@
               <img [src]="base64Image">
             </ion-thumbnail>
           </ion-item>
-          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+          <ion-item>
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+          </ion-item>
         </ion-col>
         <ion-col width-20 center>
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full [disabled]="f.valid === false">send</button>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full *ngIf="base64Image">send</button>
         </ion-col>
       </ion-row>
     </ion-grid>

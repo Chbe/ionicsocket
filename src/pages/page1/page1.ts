@@ -23,9 +23,11 @@ export class Page1 {
   loggedIn: boolean = false;
   radius: number = 200;
   distance: any;
+  showImage: boolean = false;
   elementt: any = 0;
   chatImgMe: string = null;
   chatImgThem: string = null;
+  locationFound: any;
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -42,7 +44,9 @@ export class Page1 {
   }
 
   ionViewDidLoad() {
-    console.log(this.content);
+
+
+    //TODO: loader för location? https://ionicframework.com/docs/components/#loading
   }
 
   ngOnInit() {
@@ -65,8 +69,8 @@ export class Page1 {
   }
 
   chatSend(v) {
-    var img = null;
-    if(this.base64Image !== undefined) {
+    var img = undefined;
+    if (this.base64Image !== undefined) {
       img = this.base64Image;
     }
 
@@ -166,8 +170,13 @@ export class Page1 {
     this.locationTracker.stopTracking();
   }
 
-  pressEvent(e) {
-    console.log("pressed");
+  pressEvent() {
+    //this.showImage = this.showImage ? false : true;
+    this.showImage = true;
+  }
+
+  touchEnd() {
+    this.showImage = false;
   }
 
   takePicture() {
