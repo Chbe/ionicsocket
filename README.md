@@ -1,7 +1,12 @@
 # ionicsocket
 
-npm install socket.io-client --save
-typings install dt~socket.io-client --save --global
+$ npm install
+
+$ npm install socket.io-client --save
+$ typings install dt~socket.io-client --save --global
 
 $ ionic plugin add cordova-plugin-geolocation
 $ npm install --save @ionic-native/geolocation
+
+$ ionic plugin add cordova-plugin-camera
+$ npm install --save @ionic-native/camera
