@@ -109,7 +109,7 @@ export class Page1 {
     else {
       var self = this;
       let toast = self.toastCtrl.create({
-        message: "Can't seem to find your location, check yuor settings",
+        message: "Can't seem to find your location, check your settings",
         duration: 3000,
         position: 'bottom'
       });
