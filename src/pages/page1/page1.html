@@ -37,13 +37,13 @@
           <span class="username">
           <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
           </span>
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 50%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampThem" *ngIf="data.username !== username">{{data.latitude}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 50%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
@@ -59,12 +59,12 @@
     </div>
   </ion-list>
 
-  <ion-fab right *ngIf="loggedIn">
+  <ion-fab #fabis right *ngIf="loggedIn">
     <button ion-fab mini color="trans"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
-      <button ion-fab (click)="takePicture()"><ion-icon name="camera"></ion-icon></button>
-      <button ion-fab (click)="chooseImageFromGallery()"><ion-icon name="image"></ion-icon></button>
-      <button ion-fab (click)="radiusModal()"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
+      <button ion-fab (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
@@ -81,7 +81,7 @@
         <ion-col width-80 *ngIf="base64Image">
           <ion-item>
             <ion-thumbnail item-left>
-              <img [src]="base64Image">
+              <img [src]="base64Image" style="border-radius: 50%">
             </ion-thumbnail>
           </ion-item>
           <ion-item>

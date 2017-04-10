@@ -181,7 +181,8 @@ export class Page1 {
     this.showImage = false;
   }
 
-  takePicture() {
+  takePicture(ev) {
+    ev.close();
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       targetWidth: 1000,
@@ -196,7 +197,8 @@ export class Page1 {
 
   }
 
-  chooseImageFromGallery() {
+  chooseImageFromGallery(ev) {
+    ev.close();
     this.camera.getPicture({
       destinationType: this.camera.DestinationType.DATA_URL,
       targetWidth: 1000,
@@ -210,7 +212,8 @@ export class Page1 {
     });
   }
 
-  radiusModal() {
+  radiusModal(ev) {
+    ev.close();
     {
       let alert = this.alertCtrl.create({
         title: 'Change radius',
