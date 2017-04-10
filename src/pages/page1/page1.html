@@ -37,23 +37,23 @@
           <span class="username">
           <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
           </span>
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent()" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampThem" *ngIf="data.username !== username">{{data.latitude}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent()" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
       </div>
 
-      <div class="image-container" [ngClass]="{'open': showImage}">
-        <div>
-          <img width="1000" height="1000" src="{{data.image}}">
-        </div>
-      </div>
+      <ion-card class="image-container" [ngClass]="{'open': showImage}" style="max-height: 80%;">
+        <ion-card-content style="padding: inherit;">
+          <img style="max-height: 77vh;" [src]="messageImage">
+        </ion-card-content>
+      </ion-card>
       <div class="overlay" [ngClass]="{'open': showImage}"></div>
 
     </div>

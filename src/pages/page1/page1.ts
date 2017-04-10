@@ -28,6 +28,7 @@ export class Page1 {
   chatImgMe: string = null;
   chatImgThem: string = null;
   locationFound: any;
+  messageImage: any;
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -170,8 +171,9 @@ export class Page1 {
     this.locationTracker.stopTracking();
   }
 
-  pressEvent() {
+  pressEvent(img) {
     //this.showImage = this.showImage ? false : true;
+    this.messageImage = img;
     this.showImage = true;
   }
 
