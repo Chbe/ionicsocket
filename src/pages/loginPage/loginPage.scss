@@ -1,0 +1,36 @@
+loginPage {
+
+    background-color: white;
+
+    .main {
+        margin-top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
+
+    .item-md.item-block .item-inner {
+        border-bottom: none;
+    }
+
+    .item-ios.item-block .item-inner {
+        border-bottom: none;
+    }
+
+    .loginButton {
+        height: 5em; 
+        width: 100%; 
+    }
+
+    .loginBadge {
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+    }
+
+    .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+        top: 100%;
+        bottom: 0;
+    }
+}

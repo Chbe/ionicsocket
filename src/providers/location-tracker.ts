@@ -12,7 +12,8 @@ export class LocationTracker {
   public lng: number;
 
   constructor(public zone: NgZone, private geolocation: Geolocation) {
-
+    console.log("location service init");
+    this.startTracking();
   }
 
   startTracking() {

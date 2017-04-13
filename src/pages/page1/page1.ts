@@ -1,8 +1,9 @@
 import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
 import * as io from 'socket.io-client';
-import { NavController, Content, AlertController, ToastController } from 'ionic-angular';
+import { NavController, Content, AlertController, ToastController, NavParams } from 'ionic-angular';
 import { LocationTracker } from '../../providers/location-tracker';
 import { Camera } from '@ionic-native/camera';
+import { ChatService } from '../../providers/chat-service';
 
 @Component({
   selector: 'page-page1',
@@ -40,8 +41,8 @@ export class Page1 {
     '#00FF00', '#008000',
     '#FF00FF', '#808000',
   ];
-  constructor(public navCtrl: NavController, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private chatService: ChatService) {
+    this.username = navParams.get('username');
   }
 
   ionViewDidLoad() {
@@ -51,22 +52,56 @@ export class Page1 {
   }
 
   ngOnInit() {
-    this.start();
-    this.socket = io.connect(this.socketHost);
+    this.loggedIn = true;
+    if (this.myInput !== undefined) {
+      setTimeout(() => {
+        this.myInput.setFocus();
+      }, 150);
+    }
+    // this.start();
+    // this.socket = io.connect(this.socketHost);
     this.zone = new NgZone({ enableLongStackTrace: false });
-    this.socket.on("new message", (msg) => {
+    // this.socket.on("new message", (msg) => {
+    //   this.zone.run(() => {
+    //     console.log(msg);
+    //     msg.timestamp = this.formatDate(msg.timestamp);
+    //     var dis = this.getDistance(msg.latitude, msg.longitude);
+    //     msg.latitude = Math.round(dis * 10) / 10;
+    //     console.log("distance: ", msg.latitude, "radius: ", this.radius);
+    //     if (msg.latitude <= this.radius) {
+    //       this.messages.push(msg);
+    //       this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+    //     }
+    //   });
+    // });
+
+    this.chatService.componentMethodCalled$.subscribe(
+      (data) => {
+        this.startComponentMethod(data);
+      }
+    );
+  }
+
+  startComponentMethod(data) {
+    console.log("data componentmethod", data);
+        this.addMsg(data.data);
+  }
+
+  addMsg(msg) {
+
+    console.log(msg);
+    msg.timestamp = this.formatDate(msg.timestamp);
+    var dis = this.getDistance(msg.latitude, msg.longitude);
+    msg.latitude = Math.round(dis * 10) / 10;
+    console.log("distance: ", msg.latitude, "radius: ", this.radius);
+    if (msg.latitude <= this.radius) {
       this.zone.run(() => {
-        console.log(msg);
-        msg.timestamp = this.formatDate(msg.timestamp);
-        var dis = this.getDistance(msg.latitude, msg.longitude);
-        msg.latitude = Math.round(dis * 10) / 10;
-        console.log("distance: ", msg.latitude, "radius: ", this.radius);
-        if (msg.latitude <= this.radius) {
-          this.messages.push(msg);
-          this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
-        }
+        this.messages.push(msg);
+        console.log(this.content);
+        //this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+
       });
-    });
+    }
   }
 
   chatSend(v) {
@@ -83,7 +118,7 @@ export class Page1 {
       image: img,
       timestamp: Date.now()
     };
-    this.socket.emit('new message', data);
+    this.chatService.sendMsg(data);
     data.timestamp = this.formatDate(data.timestamp);
     data.latitude = Math.round(this.getDistance(data.latitude, data.longitude) * 10) / 10;
     this.chat = '';
@@ -93,33 +128,6 @@ export class Page1 {
       this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
       this.base64Image = undefined;
     });
-
-  }
-
-  logForm() {
-    if (this.locationTracker.lat !== undefined) {
-      this.loggedIn = true;
-      this.socket.emit('add user', this.username);
-
-      if (this.myInput !== undefined) {
-        setTimeout(() => {
-          this.myInput.setFocus();
-        }, 150);
-      }
-    }
-    else {
-      var self = this;
-      let toast = self.toastCtrl.create({
-        message: "Can't seem to find your location, check your settings",
-        duration: 3000,
-        position: 'bottom'
-      });
-
-      toast.onDidDismiss(() => {
-      });
-
-      toast.present();
-    }
 
   }
 
@@ -161,10 +169,6 @@ export class Page1 {
     }
     var index = Math.abs(hash % this.COLORS.length);
     return this.COLORS[index];
-  }
-
-  start() {
-    this.locationTracker.startTracking();
   }
 
   stop() {

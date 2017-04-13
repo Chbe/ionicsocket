@@ -7,27 +7,6 @@
 </ion-header>
 
 <ion-content>
-  <div class="loginPage" *ngIf="!loggedIn">
-    <div class="loginForm">
-      <form (ngSubmit)="logForm()" id="loginFormId">
-        <ion-list class="loginList">
-          <ion-input id="loginInput" autocomplete="on" autocapitalize=words [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..."
-            clearInput="true" name="username"></ion-input>
-          <ion-item class="radiusInput">
-            <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary" style="width: 90%; margin-top: 3vh;">
-              <ion-icon range-left small style="color: white" name="locate"></ion-icon>
-              <ion-icon range-right style="color: white" name="locate"></ion-icon>
-            </ion-range>
-          </ion-item>
-          <ion-badge color="secondary" class="loginList" style="width: initial;">{{radius}} meter</ion-badge>
-        </ion-list>
-      </form>
-    </div>
-  </div>
-
-  <ion-footer *ngIf="!loggedIn" class="myFooter" padding>
-    <button ion-button block outline color="secondary" type="submit" form="loginFormId" (click)="logForm()" style="height: 5em; width: 100%; margin-top: 5vh;">Login</button>
-  </ion-footer>
 
   <ion-list *ngIf="loggedIn" style="margin-top: 5em; margin-bottom: 8em;">
     <div *ngFor="let data of messages" style="margin-top: 1.5em;">
