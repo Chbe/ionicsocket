@@ -83,7 +83,6 @@ export class Page1 {
   }
 
   startComponentMethod(data) {
-    console.log("data componentmethod", data);
         this.addMsg(data.data);
   }
 
