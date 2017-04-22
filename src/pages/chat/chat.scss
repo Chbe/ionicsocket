@@ -20,19 +20,35 @@ page-chat {
         margin: auto;
     }
 
+    .label-md {
+        margin: 0;
+    }
+
+    .label-ios {
+        margin: 0;
+    }
+
+    ion-fab {
+        margin-top: -4em;
+    }
+
     .item-md {
         background-color: transparent;
+        padding-left: 0;
     }
 
     .item-ios {
         background-color: transparent;
+        padding-left: 0;
     }
 
     .list-md .item-block .item-inner {
+        padding-right: 0;
         border-bottom: none;
     }
 
     .list-ios .item-block .item-inner {
+        padding-right: 0;
         border-bottom: none;
     }
 

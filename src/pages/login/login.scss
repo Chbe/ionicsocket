@@ -1,11 +1,18 @@
 page-login {
-    background-color: white;
 
     .main {
         margin-top: 50%;
         display: flex;
         align-items: center;
         justify-content: center
+    }
+
+    .item-md {
+        background-color: transparent !important;
+    }
+
+    .item-ios {
+        background-color: transparent !important;
     }
 
     .item-md.item-block .item-inner {
@@ -19,6 +26,9 @@ page-login {
     .loginButton {
         height: 5em; 
         width: 100%; 
+        border-color: #E1AEE5;
+        color: white;
+        background-color: #E1AEE5;
     }
 
     .loginBadge {
@@ -32,4 +42,16 @@ page-login {
         top: 100%;
         bottom: 0;
     }
+
+    .range-md .range-bar {
+        background: #ffffff;
+    }
+
+    .range-ios .range-bar {
+        background: #ffffff;
+    }
 }
+
+html, body, ion-app, ion-content, ion-page, .nav-decor {
+     background-color: rgba(148, 224, 207, 0.30) !important;
+    }

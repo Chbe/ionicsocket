@@ -1,6 +1,6 @@
 import { Component, NgZone, ViewChild, } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, AlertController, ToastController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
 
