@@ -1,18 +1,23 @@
-import { Injectable, NgZone } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 import 'rxjs';
+import { Geolocation } from '@ionic-native/geolocation';
 
+/*
+  Generated class for the Location provider.
 
-
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular 2 DI.
+*/
 @Injectable()
-export class LocationTracker {
+export class Location {
 
   public watch: any;
   public lat: number;
   public lng: number;
 
-  constructor(public zone: NgZone, private geolocation: Geolocation) {
-    console.log("location service init");
+  constructor(private geolocation: Geolocation) {
+    console.log('Hello Location Provider');
     this.startTracking();
   }
 

@@ -1,15 +1,21 @@
-<ion-header *ngIf="loggedIn">
+<!--
+  Generated template for the Chat page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+
   </ion-navbar>
+
 </ion-header>
 
-<ion-content>
 
-  <ion-list *ngIf="loggedIn" style="margin-top: 5em; margin-bottom: 8em;">
-    <div *ngFor="let data of messages" style="margin-top: 1.5em;">
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let data of messages">
       <div class="messagesDiv">
 
         <div class="from-them" *ngIf="data.username !== username">
@@ -19,7 +25,7 @@
           <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 50%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
         </div>
-        <span class="timestampThem" *ngIf="data.username !== username">{{data.latitude}}m away || {{data.timestamp}}</span>
+        <span class="timestampThem" *ngIf="data.username !== username">{{data.distance}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
           <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 50%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
@@ -27,18 +33,10 @@
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
       </div>
-
-      <ion-card class="image-container" [ngClass]="{'open': showImage}" style="max-height: 80%;">
-        <ion-card-content style="padding: inherit;">
-          <img style="max-height: 77vh;" [src]="messageImage">
-        </ion-card-content>
-      </ion-card>
-      <div class="overlay" [ngClass]="{'open': showImage}"></div>
-
-    </div>
+    </ion-item>
   </ion-list>
 
-  <ion-fab #fabis right *ngIf="loggedIn">
+  <ion-fab #fabis right>
     <button ion-fab mini color="trans"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
       <button ion-fab (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
@@ -46,28 +44,31 @@
       <button ion-fab (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
+
 </ion-content>
 
-<ion-footer *ngIf="loggedIn">
+<ion-footer>
   <form #f="ngForm">
     <ion-grid>
       <ion-row>
-        <ion-col width-80 *ngIf="!base64Image">
+        <ion-col class="messageCol" *ngIf="!base64Image">
           <ion-item>
-            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..."
+              #input focus="loggedIn"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col width-80 *ngIf="base64Image">
+        <ion-col class="messageCol" *ngIf="base64Image">
           <ion-item>
             <ion-thumbnail item-left>
               <img [src]="base64Image" style="border-radius: 50%">
             </ion-thumbnail>
           </ion-item>
           <ion-item>
-            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..." #input focus="loggedIn"></ion-input>
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..."
+              #input focus="loggedIn"></ion-input>
           </ion-item>
         </ion-col>
-        <ion-col width-20 center>
+        <ion-col id="sendBtn">
           <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
           <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full *ngIf="base64Image">send</button>
         </ion-col>

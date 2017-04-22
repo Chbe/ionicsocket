@@ -1,0 +1,19 @@
+<div class="main">
+  <form (ngSubmit)="login()" id="loginFormId" class="loginForm">
+    <ion-input id="loginInput" autocomplete="on" autocapitalize=words [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..."
+      clearInput="true" name="username"></ion-input>
+    <ion-item class="radiusInput">
+      <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="secondary" id="rangeInput">
+        <ion-icon range-left small name="locate"></ion-icon>
+        <ion-icon range-right name="locate"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-badge color="secondary" class="loginBadge">{{radius}} meter</ion-badge>
+    </ion-item>
+  </form>
+</div>
+
+<ion-footer padding>
+  <button ion-button block outline class="loginButton" color="secondary" type="submit" form="loginFormId">Login</button>
+</ion-footer>

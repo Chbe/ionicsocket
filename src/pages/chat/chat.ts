@@ -1,19 +1,24 @@
-import { Component, NgZone, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgZone, ViewChild, } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content, AlertController, ToastController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
-import { NavController, Content, AlertController, ToastController, NavParams } from 'ionic-angular';
-import { LocationTracker } from '../../providers/location-tracker';
-import { Camera } from '@ionic-native/camera';
-import { ChatService } from '../../providers/chat-service';
+import { Location } from '../../providers/location';
 
+/**
+ * Generated class for the Chat page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+@IonicPage()
 @Component({
-  selector: 'page-page1',
-  templateUrl: 'page1.html',
+  selector: 'page-chat',
+  templateUrl: 'chat.html',
   providers: [Camera]
 })
-export class Page1 {
+export class Chat {
   @ViewChild(Content) content: Content;
   @ViewChild('input') myInput;
-  @ViewChild('myElement') myElement: ElementRef;
   messages: any = [];
   socketHost: string = "https://androidserverapp.herokuapp.com/";
   socket: any;
@@ -21,14 +26,11 @@ export class Page1 {
   base64Image: string = undefined;
   username: string;
   zone: any;
-  loggedIn: boolean = false;
   radius: number = 200;
   distance: any;
   showImage: boolean = false;
-  elementt: any = 0;
   chatImgMe: string = null;
   chatImgThem: string = null;
-  locationFound: any;
   messageImage: any;
   COLORS = [
     '#FF0000',
@@ -41,66 +43,36 @@ export class Page1 {
     '#00FF00', '#008000',
     '#FF00FF', '#808000',
   ];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: LocationTracker, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private chatService: ChatService) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera) {
     this.username = navParams.get('username');
   }
 
   ionViewDidLoad() {
+    console.log('ionViewDidLoad Chat', this.username);
+    this.socket = io.connect(this.socketHost);
+    this.socket.emit('add user', this.username);
+    this.zone = new NgZone({ enableLongStackTrace: false });
 
-
-    //TODO: loader för location? https://ionicframework.com/docs/components/#loading
-  }
-
-  ngOnInit() {
-    this.loggedIn = true;
     if (this.myInput !== undefined) {
       setTimeout(() => {
         this.myInput.setFocus();
       }, 150);
     }
-    // this.start();
-    // this.socket = io.connect(this.socketHost);
-    this.zone = new NgZone({ enableLongStackTrace: false });
-    // this.socket.on("new message", (msg) => {
-    //   this.zone.run(() => {
-    //     console.log(msg);
-    //     msg.timestamp = this.formatDate(msg.timestamp);
-    //     var dis = this.getDistance(msg.latitude, msg.longitude);
-    //     msg.latitude = Math.round(dis * 10) / 10;
-    //     console.log("distance: ", msg.latitude, "radius: ", this.radius);
-    //     if (msg.latitude <= this.radius) {
-    //       this.messages.push(msg);
-    //       this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
-    //     }
-    //   });
-    // });
 
-    this.chatService.componentMethodCalled$.subscribe(
-      (data) => {
-        this.startComponentMethod(data);
-      }
-    );
-  }
-
-  startComponentMethod(data) {
-        this.addMsg(data.data);
-  }
-
-  addMsg(msg) {
-
-    console.log(msg);
-    msg.timestamp = this.formatDate(msg.timestamp);
-    var dis = this.getDistance(msg.latitude, msg.longitude);
-    msg.latitude = Math.round(dis * 10) / 10;
-    console.log("distance: ", msg.latitude, "radius: ", this.radius);
-    if (msg.latitude <= this.radius) {
+    this.socket.on("new message", (msg) => {
       this.zone.run(() => {
-        this.messages.push(msg);
-        console.log(this.content);
-        //this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
-
+        console.log(msg);
+        msg.timestamp = this.formatDate(msg.timestamp);
+        var dis = this.getDistance(msg.latitude, msg.longitude);
+        msg.distance = Math.round(dis * 10) / 10;
+        console.log("distance: ", msg.latitude, "radius: ", this.radius);
+        if (msg.distance <= this.radius) {
+          this.messages.push(msg);
+          this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+        }
       });
-    }
+    });
   }
 
   chatSend(v) {
@@ -115,9 +87,10 @@ export class Page1 {
       latitude: this.locationTracker.lat,
       longitude: this.locationTracker.lng,
       image: img,
+      distance: undefined,
       timestamp: Date.now()
     };
-    this.chatService.sendMsg(data);
+    this.socket.emit('new message', data);
     data.timestamp = this.formatDate(data.timestamp);
     data.latitude = Math.round(this.getDistance(data.latitude, data.longitude) * 10) / 10;
     this.chat = '';
@@ -252,4 +225,7 @@ export class Page1 {
 
     }
   }
+
+
+
 }

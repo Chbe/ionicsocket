@@ -1,11 +1,10 @@
-page-page1 {
-
+page-chat {
     .ion-page {
         border: none;
     }
 
     .scroll-content { 
-        padding-bottom: 20%;
+        // padding-bottom: 12%;
     }
 
     .loginForm {
@@ -99,11 +98,11 @@ page-page1 {
         padding-top: 10%
     }
 
-    #sendMessage {
+    #sendBtn {
         max-width: 20%;
     }
 
-    #messageCol {
+    .messageCol {
         max-width: 80%;
     }
 
