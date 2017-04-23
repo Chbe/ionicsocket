@@ -15,33 +15,39 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let data of messages">
+    <div *ngFor="let data of messages">
       <div class="messagesDiv">
 
         <div class="from-them" *ngIf="data.username !== username">
           <span class="username">
           <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
           </span>
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
-          <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampThem" *ngIf="data.username !== username">{{data.distance}}m away || {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
-          <span class="" style="word-wrap: break-word;" *ngIf="!data.image">{{data.message}}</span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="!data.image">{{data.message}}</span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>
       </div>
-    </ion-item>
+    </div>
+    <ion-card class="image-container" [ngClass]="{'open': showImage}" style="max-height: 80%;">
+      <ion-card-content style="padding: inherit;">
+        <img style="max-height: 77vh;" [src]="messageImage">
+      </ion-card-content>
+    </ion-card>
+    <div class="overlay" [ngClass]="{'open': showImage}"></div>
   </ion-list>
 
   <ion-fab #fabis right>
-    <button ion-fab mini color="trans"><ion-icon name="settings"></ion-icon></button>
+    <button ion-fab mini color="pinkish"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
-      <button ion-fab (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
-      <button ion-fab (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
-      <button ion-fab (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab color="white" (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab color="white" (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
+      <button ion-fab color="white" (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 
@@ -69,8 +75,8 @@
           </ion-item>
         </ion-col>
         <ion-col id="sendBtn">
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="secondary" full *ngIf="base64Image">send</button>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="pinkish" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="pinkish" full *ngIf="base64Image">send</button>
         </ion-col>
       </ion-row>
     </ion-grid>

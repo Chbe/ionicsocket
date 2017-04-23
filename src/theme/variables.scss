@@ -27,30 +27,33 @@ $colors: (
   primary:    #488aff,
   secondary:  #32db64,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  white:      white,
   dark:       #222,
   trans:      rgba(255, 255, 255, 0),
-  pinkish: #E1AEE5,
-  main: #94e0cf
+  pinkish:    #E1AEE5,
+  main:       #94e0cf,
+  blueish:    #97F2F7
 );
 
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-$alert-ios-button-text-color: color($colors, secondary);
-$alert-ios-input-border-color: #32db64;
-$alert-ios-input-border: $hairlines-width solid $alert-ios-input-border-color;
+$alert-ios-button-text-color: color($colors, main);
+$alert-ios-input-border-color: white;
+$alert-ios-input-border: $hairlines-width solid white;
 
 
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-$alert-md-button-text-color: color($colors, secondary);
-$alert-md-input-border-color: #32db64;
-$alert-md-input-border: $hairlines-width solid $alert-md-input-border-color;
-$text-input-highlight-color-valid: #32db64;
+$alert-md-button-text-color: color($colors, main);
+$alert-md-input-border-color: white;
+$alert-md-input-border: $hairlines-width solid white;
+$text-input-highlight-color-valid: white;
+$text-input-placeholder-color: white;
+$text-input-highlight-color-invalid: white;
 
 
 

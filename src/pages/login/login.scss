@@ -50,6 +50,11 @@ page-login {
     .range-ios .range-bar {
         background: #ffffff;
     }
+
+    form, input, optgroup, select {
+        color: white;
+        text-align: center;
+    }
 }
 
 html, body, ion-app, ion-content, ion-page, .nav-decor {

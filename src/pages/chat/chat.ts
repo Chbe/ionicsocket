@@ -50,6 +50,7 @@ export class Chat {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Chat', this.username);
+    console.log("content: ", this.content);
     this.socket = io.connect(this.socketHost);
     this.socket.emit('add user', this.username);
     this.zone = new NgZone({ enableLongStackTrace: false });
