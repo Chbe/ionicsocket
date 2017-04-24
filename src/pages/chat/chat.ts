@@ -194,13 +194,15 @@ export class Chat {
     {
       let alert = this.alertCtrl.create({
         title: 'Change radius',
-        message: 'Decide on how far away you want to receive messages from, in meters',
+        subTitle: 'Decide on how far away you want to receive messages from, in meters',
+        message: 'Current radius: ' + this.radius,
         inputs: [
           {
             name: 'radius',
             placeholder: 'Change radius...',
-            min: 10,
-            type: 'number'
+            min: 20,
+            type: 'number',
+            max: 5000
           }
         ],
         buttons: [
@@ -214,7 +216,7 @@ export class Chat {
           {
             text: 'Save',
             handler: data => {
-              if (Number(data.radius)) {
+              if (Number(data.radius) >= 20 && Number(data.radius) <= 5000) {
                 this.radius = data.radius;
                 console.log(data, data.radius);
               }

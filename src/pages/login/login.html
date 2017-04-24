@@ -1,13 +1,13 @@
 <!--<ion-content>-->
   <div class="main">
-    <form (ngSubmit)="login()" id="loginFormId" class="loginForm">
+    <form (ngSubmit)="login()" #f id="loginFormId" class="loginForm">
       <ion-input id="loginInput" autocapitalize=words [(ngModel)]="username" padding type="text" placeholder="Choose a nickname..."
         clearInput="true" name="username"></ion-input>
       <ion-item>
         <ion-badge color="pinkish" class="loginBadge">{{radius}} meter</ion-badge>
       </ion-item>
       <ion-item class="radiusInput">
-        <ion-range min="10" max="3000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
+        <ion-range min="20" max="5000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
           <ion-icon range-left small color="white" name="locate"></ion-icon>
           <ion-icon range-right color="white" name="locate"></ion-icon>
         </ion-range>
@@ -17,5 +17,5 @@
 <!--</ion-content>-->
 
 <ion-footer padding>
-  <button ion-button block outline class="loginButton" color="pinkish" type="submit" form="loginFormId">Login</button>
+  <button ion-button block outline class="loginButton" color="pinkish" type="submit" form="loginFormId" [disabled]="!username">Login</button>
 </ion-footer>

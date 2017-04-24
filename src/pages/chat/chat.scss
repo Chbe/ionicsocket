@@ -69,6 +69,14 @@ page-chat {
         border: none;
     }
 
+    .alert-md .alert-input:focus {
+        border-bottom: 2px solid #e1aee5;
+    }
+
+    .alert-ios .alert-input:focus {
+        border-bottom: 2px solid #e1aee5;
+    }
+
     .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
         border: none;
     }
