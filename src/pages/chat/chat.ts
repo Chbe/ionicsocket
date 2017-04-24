@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Content, AlertController, ToastCon
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
+import CryptoJS from 'crypto-js';
 
 /**
  * Generated class for the Chat page.
@@ -17,6 +18,7 @@ import { Location } from '../../providers/location';
   providers: [Camera]
 })
 export class Chat {
+
   @ViewChild(Content) content: Content;
   @ViewChild('input') myInput;
   messages: any = [];
@@ -32,6 +34,7 @@ export class Chat {
   chatImgMe: string = null;
   chatImgThem: string = null;
   messageImage: any;
+  private key: string = 'mycryptswag1337';
   COLORS = [
     '#FF0000',
     '#00FFFF', '#C0C0C0',
@@ -48,7 +51,8 @@ export class Chat {
     this.username = navParams.get('username');
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
+
     console.log('ionViewDidLoad Chat', this.username);
     console.log("content: ", this.content);
     this.socket = io.connect(this.socketHost);
@@ -63,6 +67,7 @@ export class Chat {
 
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
+        // msg = this.decrypt(msg);
         console.log(msg);
         msg.timestamp = this.formatDate(msg.timestamp);
         var dis = this.getDistance(msg.latitude, msg.longitude);
@@ -76,11 +81,27 @@ export class Chat {
     });
   }
 
-  chatSend(v) {
-    var img = undefined;
+  encrypt(data) {
+    return new Promise(resolve => {
+      data = CryptoJS.AES.encrypt(JSON.stringify(data), this.key);
+      return resolve(data);
+    })
+  }
+
+  decrypt(data) {
+    return new Promise(resolve => {
+      var bytes = CryptoJS.AES.decrypt(data.toString(), this.key);
+      return resolve(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)));
+    })
+  }
+
+  async chatSend(v) {
+    var img = null;
     if (this.base64Image !== undefined) {
       img = this.base64Image;
     }
+
+
 
     let data: any = {
       username: this.username,
@@ -88,12 +109,20 @@ export class Chat {
       latitude: this.locationTracker.lat,
       longitude: this.locationTracker.lng,
       image: img,
-      distance: undefined,
+      distance: null,
       timestamp: Date.now()
     };
+
+    // var cipher =  await this.encrypt(JSON.stringify(data));
+
+    // console.log("encrypt", cipher);
+
+    // var uncipher = await this.decrypt(cipher);
+    // console.log(uncipher);
+
     this.socket.emit('new message', data);
     data.timestamp = this.formatDate(data.timestamp);
-    data.latitude = Math.round(this.getDistance(data.latitude, data.longitude) * 10) / 10;
+    // data.distance = Math.round(this.getDistance(data.latitude, data.longitude) * 10) / 10;
     this.chat = '';
     this.zone.run(() => {
       ;
