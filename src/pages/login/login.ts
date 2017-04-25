@@ -55,7 +55,8 @@ export class Login {
       console.log(this.username);
       this.cameraPreview.stopCamera();
       this.app.getRootNav().setRoot('Chat', {
-        username: this.username
+        username: this.username,
+        radius: this.radius
       });
     }
     else {

@@ -28,7 +28,7 @@ export class Chat {
   base64Image: string = undefined;
   username: string;
   zone: any;
-  radius: number = 200;
+  radius: number;
   distance: any;
   showImage: boolean = false;
   chatImgMe: string = null;
@@ -49,6 +49,7 @@ export class Chat {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera) {
     this.username = navParams.get('username');
+    this.radius = navParams.get('radius');
   }
 
   async ionViewDidLoad() {
