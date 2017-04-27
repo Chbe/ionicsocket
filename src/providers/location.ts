@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs';
 import { Geolocation } from '@ionic-native/geolocation';
 
