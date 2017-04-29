@@ -1,5 +1,14 @@
 page-login {
 
+    #loginInput {
+        border: none;
+        border-bottom: none;
+    }
+
+    .input-has-focus .input-cover {
+        border: none;
+    }
+
     .main {
         margin-top: 50%;
         display: flex;

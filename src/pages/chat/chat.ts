@@ -53,7 +53,6 @@ export class Chat {
   }
 
   async ionViewDidLoad() {
-
     console.log('ionViewDidLoad Chat', this.username);
     console.log("content: ", this.content);
     this.socket = io.connect(this.socketHost);

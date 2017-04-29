@@ -42,6 +42,7 @@ $colors: (
 $alert-ios-button-text-color: color($colors, main);
 $alert-ios-input-border-color: white;
 $alert-ios-input-border: $hairlines-width solid white;
+$text-input-ios-show-focus-highlight: false !default;
 
 
 
@@ -54,6 +55,7 @@ $alert-md-input-border: $hairlines-width solid white;
 $text-input-highlight-color-valid: white;
 $text-input-placeholder-color: #E1AEE5;
 $text-input-highlight-color-invalid: white;
+$text-input-md-show-focus-highlight: false !default;
 
 
 
