@@ -7,13 +7,30 @@
 <ion-header>
 
   <ion-navbar>
-
+    <ion-item>
+      <ion-label class="countryInfo">
+        <ion-icon name="pin"></ion-icon>
+        {{city}}
+      </ion-label>
+      <ion-label class="countryInfo">
+        <ion-icon name="ios-people"></ion-icon>
+        {{onlineUsers}}
+      </ion-label>
+    </ion-item>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content>
+  <ion-fab #fabis right>
+    <button ion-fab mini color="pinkish"><ion-icon name="settings"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab color="white" (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab color="white" (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
+      <button ion-fab color="white" (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-list>
     <div *ngFor="let data of messages">
       <div class="messagesDiv">
@@ -42,15 +59,6 @@
     <div class="overlay" [ngClass]="{'open': showImage}"></div>
   </ion-list>
 
-  <ion-fab #fabis right>
-    <button ion-fab mini color="pinkish"><ion-icon name="settings"></ion-icon></button>
-    <ion-fab-list>
-      <button ion-fab color="white" (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
-      <button ion-fab color="white" (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
-      <button ion-fab color="white" (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
 </ion-content>
 
 <ion-footer>
@@ -59,7 +67,7 @@
       <ion-row>
         <ion-col class="messageCol" *ngIf="!base64Image">
           <ion-item>
-            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" spellcheck="true" required placeholder="type here..."
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..."
               #input focus="loggedIn"></ion-input>
           </ion-item>
         </ion-col>
@@ -70,7 +78,7 @@
             </ion-thumbnail>
           </ion-item>
           <ion-item>
-            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" spellcheck="true" required placeholder="type here..."
+            <ion-input [(ngModel)]="chat" name="chatText" autocapitalize="sentences" autocomplete="true" spellcheck="true" required placeholder="type here..."
               #input focus="loggedIn"></ion-input>
           </ion-item>
         </ion-col>

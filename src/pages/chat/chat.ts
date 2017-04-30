@@ -21,6 +21,8 @@ export class Chat {
 
   @ViewChild(Content) content: Content;
   @ViewChild('input') myInput;
+  city: any;
+  countryCode: any;
   messages: any = [];
   socketHost: string = "https://androidserverapp.herokuapp.com/";
   socket: any;
@@ -34,6 +36,7 @@ export class Chat {
   chatImgMe: string = null;
   chatImgThem: string = null;
   messageImage: any;
+  onlineUsers: number;
   private key: string = 'mycryptswag1337';
   COLORS = [
     '#FF0000',
@@ -52,11 +55,22 @@ export class Chat {
     this.radius = navParams.get('radius');
   }
 
-  async ionViewDidLoad() {
+  ngOnInit() {
+    if (!this.locationTracker.city) {
+      console.log("debugging på dator, hårdkodad city och CC");
+      this.city = 'Örebro';
+      this.countryCode = 'SE';
+    }
+    else {
+      this.city = this.locationTracker.city;
+      this.countryCode = this.locationTracker.countryCode;
+    }
+  }
+
+  ionViewDidLoad() {
     console.log('ionViewDidLoad Chat', this.username);
-    console.log("content: ", this.content);
     this.socket = io.connect(this.socketHost);
-    this.socket.emit('add user', this.username);
+    this.socket.emit('add user', this.username, this.city);
     this.zone = new NgZone({ enableLongStackTrace: false });
 
     if (this.myInput !== undefined) {
@@ -64,6 +78,10 @@ export class Chat {
         this.myInput.setFocus();
       }, 150);
     }
+
+    this.socket.on('user count', (data) => {
+      this.onlineUsers = data;
+    });
 
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
@@ -104,6 +122,7 @@ export class Chat {
 
 
     let data: any = {
+      room: this.city,
       username: this.username,
       message: v.chatText,
       latitude: this.locationTracker.lat,

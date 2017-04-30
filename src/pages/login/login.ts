@@ -50,7 +50,7 @@ export class Login {
   }
 
   login() {
-    if (this.locationTracker.lat !== undefined) {
+    if (this.locationTracker.lat) { // && this.locationTracker.city
       // this.chatService.login(this.username);
       console.log(this.username);
       this.cameraPreview.stopCamera();

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativeGeocoder, NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 
 /*
   Generated class for the Location provider.
@@ -14,8 +15,10 @@ export class Location {
   public watch: any;
   public lat: number;
   public lng: number;
+  public countryCode: any;
+  public city: any;
 
-  constructor(private geolocation: Geolocation) {
+  constructor(private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
     console.log('Hello Location Provider');
     this.startTracking();
   }
@@ -23,8 +26,7 @@ export class Location {
   startTracking() {
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
+      this.getGeocodeFromCoords(resp.coords.latitude, resp.coords.longitude)
     }).catch((error) => {
       console.log('Error getting location', error);
     });
@@ -41,6 +43,16 @@ export class Location {
 
   stopTracking() {
     this.watch.unsubscribe();
+  }
+
+  getGeocodeFromCoords(lat, lng) {
+    this.nativeGeocoder.reverseGeocode(lat, lng)
+      .then((result: NativeGeocoderReverseResult) => {
+        console.log("You are in country", result.countryName, "in city", result.city, "country code", result.countryCode);
+        this.city = result.city;
+        this.countryCode = result.countryCode;
+      })
+      .catch((error: any) => console.log(error));
   }
 
 }
