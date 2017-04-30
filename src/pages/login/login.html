@@ -19,5 +19,5 @@
 <!--</ion-content>-->
 
 <ion-footer padding>
-  <button ion-button block outline class="loginButton" color="pinkish" type="submit" form="loginFormId" [disabled]="!username">Login</button>
+  <button *ngIf="!hide" ion-button block outline class="loginButton" color="pinkish" type="submit" form="loginFormId" [disabled]="!username">Login</button>
 </ion-footer>

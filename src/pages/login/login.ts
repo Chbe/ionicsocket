@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, ToastController, Platform } from 'ionic-angular';
 import { Location } from '../../providers/location';
 import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-preview';
+import { Keyboard } from '@ionic-native/keyboard';
 
 /**
  * Generated class for the Login page.
@@ -13,16 +14,25 @@ import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-previe
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [CameraPreview]
+  providers: [CameraPreview, Keyboard]
 })
 export class Login {
   username: any;
   radius: number = 200;
+  hide: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private toastCtrl: ToastController, private cameraPreview: CameraPreview, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private toastCtrl: ToastController, private cameraPreview: CameraPreview, private platform: Platform, private keyboard: Keyboard) {
+    this.keyboard.onKeyboardShow().subscribe(sub => {
+      console.log("key board hide");
+      this.hide = true;
+    });
+
+    this.keyboard.onKeyboardHide().subscribe(sub => {
+      console.log("key board show");
+      this.hide = false;
+    });
   }
-
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad Login');
     const cameraPreviewOpts: CameraPreviewOptions = {
