@@ -60,12 +60,13 @@ export class Login {
   }
 
   login() {
-    if (this.locationTracker.lat) { // && this.locationTracker.city
+    var username = this.username.trim();
+    if (this.locationTracker.lat && username !== "") { // && this.locationTracker.city
       // this.chatService.login(this.username);
-      console.log(this.username);
+      console.log(this.username, username);
       this.cameraPreview.stopCamera();
       this.app.getRootNav().setRoot('Chat', {
-        username: this.username,
+        username: username,
         radius: this.radius
       });
     }

@@ -247,10 +247,10 @@ export class Chat {
         inputs: [
           {
             name: 'radius',
-            placeholder: 'Change radius...',
             min: 20,
-            type: 'number',
-            max: 5000
+            type: 'range',
+            max: 5000,
+            id: 'inputRange',
           }
         ],
         buttons: [

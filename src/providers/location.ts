@@ -55,4 +55,19 @@ export class Location {
       .catch((error: any) => console.log(error));
   }
 
+  checkIfNewCity() {
+    setInterval(function () {
+      console.log("Kollar efter ny stad");
+      this.nativeGeocoder.reverseGeocode(this.lat, this.lng)
+        .then((result: NativeGeocoderReverseResult) => {
+          if (this.city !== result.city) {
+
+          }
+          // this.city = result.city;
+          // this.countryCode = result.countryCode;
+        })
+        .catch((error: any) => console.log(error));
+    }, 900000);
+  }
+
 }
