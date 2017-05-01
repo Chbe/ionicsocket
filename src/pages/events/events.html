@@ -7,16 +7,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>events</ion-title>
-    <ion-buttons end>
-      <button ion-button (click)="close()">Close</button>
-    </ion-buttons>
+    <ion-label class="countryInfo">Events nearby {{city}}</ion-label>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-fab #fabis right>
+    <button ion-fab mini color="main" (click)="close()"><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
   <ion-list>
     <ion-item>
       Cooooooooooooock

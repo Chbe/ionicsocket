@@ -1,3 +1,275 @@
 page-events {
 
+    .toolbar-background-md {
+        border-color: #ffffff;
+        background: white;
+    }   
+
+    .scroll-content {
+        background: white;
+        border-top: 1px solid #94e0cf;
+        border-top-left-radius: 3%;
+        border-top-right-radius: 3%;
+    }
+
+    .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+        background-image: none;
+    }
+
+    .header-ios::after, .tabs-ios[tabsPlacement="top"] > .tabbar::after, .footer-ios::before, .tabs-ios[tabsPlacement="bottom"] > .tabbar::before {
+        background-image: none;
+    }
+
+    .ion-page {
+        border: none;
+    }
+
+    .loginForm {
+        margin-bottom: 20%;
+        margin-top: 35%;
+    }
+
+    .card-md {
+        margin: auto;
+    }
+
+    .card-ios {
+        margin: auto;
+    }
+
+    .label-md {
+        margin: 0;
+    }
+
+    .label-ios {
+        margin: 0;
+    }
+
+    ion-fab {
+        margin-top: -4em;
+    }
+
+    #inputRange {
+        color: #E1AEE5;
+    }
+
+    .item-md {
+        background-color: transparent;
+        padding-left: 0;
+    }
+
+    .item-ios {
+        background-color: transparent;
+        padding-left: 0;
+    }
+
+    .item-md.item-block .item-inner {
+        border-bottom: none; 
+    }
+
+    .item-ios.item-block .item-inner {
+        border-bottom: none; 
+    }
+
+    .list-md .item-block .item-inner {
+        padding-right: 0;
+        border-bottom: none;
+    }
+
+    .list-ios .item-block .item-inner {
+        padding-right: 0;
+        border-bottom: none;
+    }
+
+    .list-ios > .item-block:first-child {
+        border: none;
+    }
+
+    .alert-md .alert-input:focus {
+        border-bottom: 2px solid #e1aee5;
+    }
+
+    .alert-ios .alert-input:focus {
+        border-bottom: 2px solid #e1aee5;
+    }
+
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+        border: none;
+    }
+
+    .grid {
+        background-color: #f8f8f8;
+    }
+
+    #loginInput {
+        text-align: center;
+        color: white;
+    }
+
+    .input-md[clearInput] .text-input {
+        padding-right: 30px;
+        border: 1px solid #94e0cf;
+        border-radius: 10px;
+    }
+
+    .input-ios[clearInput] .text-input {
+        padding-right: 30px;
+        border: 1px solid #94e0cf;
+        border-radius: 10px;
+    }
+
+    .radiusInput {
+        background-color: black;
+    }
+
+    .loginPage {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background-color: black;
+    }
+
+    .chatPage {
+        height: 100%;
+        margin: 0;
+        overflow-y: auto;
+        width: 100%;
+        float: left;
+        word-wrap: break-word;
+    }
+
+    .loginList {
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        width: 100%;
+    }
+
+    .submitItem {
+        background-color: transparent;
+        padding-top: 10%
+    }
+
+    #sendBtn {
+        max-width: 20%;
+    }
+
+    .messageCol {
+        max-width: 80%;
+    }
+
+    #messageInput {
+        text-align: left;
+    }
+
+    .messageItem {
+        background-color: white;
+    }
+
+    .messageDiv {
+        height: 100%;
+        margin: 0;
+        overflow-y: auto;
+        padding: 10px 20px 10px 20px;
+        width: 70%;
+        float: left;
+        word-wrap: break-word;
+    }
+
+    .username {
+        font-weight: 700;
+        overflow: hidden;
+        padding-right: 15px;
+        text-align: right;
+        font-size: large;
+    }
+
+    .timestampMe {
+        float: right;
+        color: gray;
+        text-align: right;
+        width: 100%;
+        font-size: small;
+        margin-right: 1em;
+    }
+
+    .timestampThem {
+        float: left;
+        color: gray;
+        text-align: left;
+        width: 100%;
+        font-size: small;
+        margin-left: 1em;
+    }
+
+    .ion-md-camera:before {
+        color: #E1AEE5;
+    }
+
+    .ion-ios-camera:before {
+        color: #E1AEE5;
+    }
+
+    .ion-md-image:before {
+        color: #E1AEE5;
+    }
+
+    .ion-ios-image:before {
+        color: #E1AEE5;
+    }
+
+    .ion-md-locate:before {
+        color: #E1AEE5;
+    }
+
+    .ion-ios-locate:before {
+        color: #E1AEE5;
+    }
+
+    .ion-md-settings:before {
+        color: white;
+    }
+
+    .ion-ios-settings:before {
+        color: white;
+    }
+
+    .ion-md-close:before {
+        color: white;
+    }
+
+    .ion-ios-close:before {
+        color: white;
+    }
+    
+    .myFooter {
+        background-color: black;
+        height: 20%;
+    }
+
+    .item-md.item-input.input-has-focus .item-inner {
+        border-bottom-color: white;
+        box-shadow: inset 0 -1px 0 0 white;
+    }
+
+    .item-ios.item-input.input-has-focus .item-inner {
+        border-bottom-color: white;
+        box-shadow: inset 0 -1px 0 0 white;
+    }
+
+    .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+        border-bottom-color: none;
+        box-shadow: none;
+    }   
+
+    .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+        border-bottom-color: none;
+        box-shadow: none;
+    }
+
+    .countryInfo {
+        color: #E1AEE5;
+    }
+
 }

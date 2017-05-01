@@ -84,6 +84,10 @@ export class Chat {
       this.app.getRootNav().setRoot('Login', {data: 'login fail'});
     });
 
+    this.socket.on('events keys', (data) => {
+      console.log(data);
+    });
+
     this.socket.on('user count', (data) => {
       this.onlineUsers = data;
     });
