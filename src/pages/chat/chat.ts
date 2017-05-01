@@ -1,5 +1,5 @@
 import { Component, NgZone, ViewChild, } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
@@ -24,6 +24,8 @@ export class Chat {
   city: any;
   countryCode: any;
   messages: any = [];
+  //http://localhost:3000/
+  //https://androidserverapp.herokuapp.com/
   socketHost: string = "https://androidserverapp.herokuapp.com/";
   socket: any;
   chat: any;
@@ -50,12 +52,14 @@ export class Chat {
     '#FF00FF', '#808000',
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, public modalCtrl: ModalController) {
     this.username = navParams.get('username');
     this.radius = navParams.get('radius');
   }
 
   ngOnInit() {
+    this.zone = new NgZone({ enableLongStackTrace: false });
+    
     if (!this.locationTracker.city) {
       console.log("debugging på dator, hårdkodad city och CC");
       this.city = 'Örebro';
@@ -67,17 +71,18 @@ export class Chat {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad Chat', this.username);
+  ionViewWillEnter() {
     this.socket = io.connect(this.socketHost);
-    this.socket.emit('add user', this.username, this.city);
-    this.zone = new NgZone({ enableLongStackTrace: false });
 
-    if (this.myInput !== undefined) {
-      setTimeout(() => {
-        this.myInput.setFocus();
-      }, 150);
-    }
+    this.socket.emit('request login', this.username);
+
+    this.socket.on('login success', (data) => {
+      this.socket.emit('add user', this.username, this.city);
+    });
+
+    this.socket.on('login fail', (data) => {
+      this.app.getRootNav().setRoot('Login', {data: 'login fail'});
+    });
 
     this.socket.on('user count', (data) => {
       this.onlineUsers = data;
@@ -97,6 +102,16 @@ export class Chat {
         }
       });
     });
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad Chat', this.username);
+
+    if (this.myInput !== undefined) {
+      setTimeout(() => {
+        this.myInput.setFocus();
+      }, 150);
+    }
   }
 
   encrypt(data) {
@@ -235,6 +250,11 @@ export class Chat {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  eventsNearby() {
+    let modal = this.modalCtrl.create('Events', { city: this.city });
+    modal.present();
   }
 
   radiusModal(ev) {
