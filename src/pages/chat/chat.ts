@@ -87,7 +87,8 @@ export class Chat {
     });
 
     this.socket.on('user count', (data) => {
-      this.onlineUsers = data;
+      console.log("data yao", data);
+      this.onlineUsers = data.numbers;
       // this.socket.emit('request keys');
     });
 
