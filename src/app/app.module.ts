@@ -7,6 +7,7 @@ import { Location } from '../providers/location';
 import { MyApp } from './app.component';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -22,6 +22,7 @@
     "@ionic-native/camera": "^3.5.0",
     "@ionic-native/camera-preview": "^3.5.0",
     "@ionic-native/core": "^3.6.1",
+    "@ionic-native/facebook": "^3.6.1",
     "@ionic-native/geolocation": "^3.5.0",
     "@ionic-native/keyboard": "^3.6.1",
     "@ionic-native/native-geocoder": "^3.6.1",

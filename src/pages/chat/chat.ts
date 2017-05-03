@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Content, AlertController, ToastCon
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
+import { ApiService } from '../../providers/api-service';
 import CryptoJS from 'crypto-js';
 
 /**
@@ -15,7 +16,7 @@ import CryptoJS from 'crypto-js';
 @Component({
   selector: 'page-chat',
   templateUrl: 'chat.html',
-  providers: [Camera]
+  providers: [Camera, ApiService]
 })
 export class Chat {
 
@@ -39,6 +40,7 @@ export class Chat {
   chatImgThem: string = null;
   messageImage: any;
   onlineUsers: number;
+  id: any;
   private key: string = 'mycryptswag1337';
   COLORS = [
     '#FF0000',
@@ -52,14 +54,14 @@ export class Chat {
     '#FF00FF', '#808000',
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private apiService: ApiService, public modalCtrl: ModalController) {
     this.username = navParams.get('username');
     this.radius = navParams.get('radius');
   }
 
   ngOnInit() {
     this.zone = new NgZone({ enableLongStackTrace: false });
-    
+
     if (!this.locationTracker.city) {
       console.log("debugging på dator, hårdkodad city och CC");
       this.city = 'Örebro';
@@ -81,15 +83,16 @@ export class Chat {
     });
 
     this.socket.on('login fail', (data) => {
-      this.app.getRootNav().setRoot('Login', {data: 'login fail'});
-    });
-
-    this.socket.on('events keys', (data) => {
-      console.log(data);
+      this.app.getRootNav().setRoot('Login', { data: 'login fail' });
     });
 
     this.socket.on('user count', (data) => {
       this.onlineUsers = data;
+      // this.socket.emit('request keys');
+    });
+
+    this.socket.on('event keys', (data) => {
+      this.id = data.data;
     });
 
     this.socket.on("new message", (msg) => {
@@ -99,8 +102,22 @@ export class Chat {
         msg.timestamp = this.formatDate(msg.timestamp);
         var dis = this.getDistance(msg.latitude, msg.longitude);
         msg.distance = Math.round(dis * 10) / 10;
-        console.log("distance: ", msg.latitude, "radius: ", this.radius);
+        var x = msg.distance;
+
         if (msg.distance <= this.radius) {
+          if (x <= 100.0) {
+            msg.distance = 'very close';
+          }
+          else if (x <= 300.0 && x >= 100.1) {
+            msg.distance = 'close';
+          }
+
+          else if (x <= 500.0 && x >= 300.1) {
+            msg.distance = 'nearby';
+          }
+          else {
+            msg.distance = '>500m away'
+          }
           this.messages.push(msg);
           this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
         }
@@ -256,8 +273,11 @@ export class Chat {
     });
   }
 
-  eventsNearby() {
-    let modal = this.modalCtrl.create('Events', { city: this.city });
+  async eventsNearby() {
+    var jsonData: any;
+    // await this.apiService.getEvents(this.city, this.id)
+    // .subscribe(data => jsonData = data.data);
+    let modal = this.modalCtrl.create('Events', { city: jsonData });
     modal.present();
   }
 
