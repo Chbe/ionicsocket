@@ -2,7 +2,7 @@
 <div class="main">
   <form (ngSubmit)="login()" #f id="loginFormId" class="loginForm">
     <ion-item>
-      <ion-input id="loginInput" autocapitalize=words [(ngModel)]="username" padding type="text" [placeholder]="placeholder"
+      <ion-input id="loginInput" autocapitalize=words [(ngModel)]="username" max="10" min="1" padding type="text" [placeholder]="placeholder"
         clearInput="false" name="username"></ion-input>
     </ion-item>
     <ion-item>

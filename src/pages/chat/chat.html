@@ -42,7 +42,7 @@
           <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%; filter: blur(2px);"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="!data.image">{{data.message}}</span>
         </div>
-        <span class="timestampThem" *ngIf="data.username !== username">{{data.distance}} || {{data.timestamp}}</span>
+        <span class="timestampThem" *ngIf="data.username !== username">{{data.distance}} | {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
           <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>

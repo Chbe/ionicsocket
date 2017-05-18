@@ -278,8 +278,8 @@ export class Chat {
     var jsonData: any;
     // await this.apiService.getEvents(this.city, this.id)
     // .subscribe(data => jsonData = data.data);
-    let modal = this.modalCtrl.create('Events', { city: jsonData });
-    modal.present();
+    // let modal = this.modalCtrl.create('Events', { city: jsonData });
+    // modal.present();
   }
 
   radiusModal(ev) {
