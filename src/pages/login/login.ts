@@ -64,6 +64,7 @@ export class Login {
   }
 
   login() {
+    console.log("platform", this.platform);
     var username = this.username.trim();
     if (this.locationTracker.lat && username !== "") { // && this.locationTracker.city
       // this.chatService.login(this.username);
@@ -74,6 +75,7 @@ export class Login {
         radius: this.radius
       });
     }
+
     else {
       var self = this;
       let toast = self.toastCtrl.create({
