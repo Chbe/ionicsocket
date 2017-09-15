@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.bengostar.smackerino2017" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>chatapp</name>
+    <name>PineChat</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author href="https://androidserverapp.herokuapp.com/">Smackerino</author>
     <content src="index.html" />
@@ -87,6 +87,6 @@
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <plugin name="cordova-plugin-facebook4" spec="~1.7.4">
         <variable name="APP_ID" value="171346350058945" />
-        <variable name="APP_NAME" value="chatapp" />
+        <variable name="APP_NAME" value="PineChat" />
     </plugin>
 </widget>

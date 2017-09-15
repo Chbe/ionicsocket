@@ -10,7 +10,10 @@ page-login {
     }
 
     .main {
-        margin-top: 50%;
+        position:absolute;
+        top:45%;
+        left:50%;
+        transform: translate(-50%, -50%);
         display: flex;
         align-items: center;
         justify-content: center
@@ -34,10 +37,11 @@ page-login {
 
     .loginButton {
         height: 5em; 
-        width: 100%; 
+        max-width: 800px; 
         border-color: #E1AEE5;
         color: white;
         background-color: #E1AEE5;
+        margin: auto;
     }
 
     .loginBadge {
@@ -54,6 +58,10 @@ page-login {
 
     form, input, optgroup, select {
         color: white;
+        text-align: center;
+    }
+
+    ion-footer {
         text-align: center;
     }
 }
