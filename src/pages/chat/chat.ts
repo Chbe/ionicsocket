@@ -5,7 +5,6 @@ import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
 import { ApiService } from '../../providers/api-service';
 import CryptoJS from 'crypto-js';
-import { ApiAiClient } from "api-ai-javascript";
 
 
 /**
@@ -101,15 +100,13 @@ export class Chat {
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
         // msg = this.decrypt(msg);
-
         console.log(msg);
+        msg.timestamp = this.formatDate(msg.timestamp);
+        var dis = this.getDistance(msg.latitude, msg.longitude);
+        msg.distance = Math.round(dis * 10) / 10;
+        var x = msg.distance;
+
         if (msg.distance <= this.radius) {
-          msg.timestamp = this.formatDate(msg.timestamp);
-          var dis = this.getDistance(msg.latitude, msg.longitude);
-          msg.distance = Math.round(dis * 10) / 10;
-          var x = msg.distance;
-
-
           if (x <= 100.0) {
             msg.distance = 'very close';
           }
@@ -126,6 +123,17 @@ export class Chat {
           this.messages.push(msg);
           this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
         }
+      });
+    });
+
+    this.socket.on("new from bot", (msg) => {
+      console.log(msg);
+      this.zone.run(() => {
+        // msg = this.decrypt(msg);
+        msg.timestamp = this.formatDate(msg.timestamp);
+        msg.distance = 'everywhere';
+        this.messages.push(msg);
+        this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
       });
     });
   }
@@ -180,8 +188,8 @@ export class Chat {
     // var uncipher = await this.decrypt(cipher);
     // console.log(uncipher);
 
-    if (data.message.toLowerCase().includes('@pineanas')) {
-      console.log("includes fungerar");
+    if (data.message.toLowerCase().includes('@pineanas') || this.onlineUsers == 1) {
+      console.log("to bot");
       this.socket.emit('new message to bot', data);
     }
     else {
@@ -199,18 +207,8 @@ export class Chat {
       this.base64Image = undefined;
     });
 
-    if (this.onlineUsers <= 1) {
-      this.talkToBot(data.message);
-    }
 
-  }
 
-  talkToBot(msg) {
-    const client = new ApiAiClient({ accessToken: '22183c0b83c340f1ae96c2eebf3f8160' })
-
-      .textRequest(msg)
-      .then((response) => { console.log("response object", response, "response word", response.result.fulfillment.speech); })
-      .catch((error) => { console.log("error", error); })
   }
 
   getDistance(lat, lon) {

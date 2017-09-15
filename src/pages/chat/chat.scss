@@ -23,6 +23,10 @@ page-chat {
         border: none;
     }
 
+    ::-webkit-scrollbar {
+        display:none !important;
+    }
+
     .loginForm {
         margin-bottom: 20%;
         margin-top: 35%;
