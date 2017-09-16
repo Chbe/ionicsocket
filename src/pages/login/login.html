@@ -9,7 +9,7 @@
       <ion-badge color="pinkish" class="loginBadge">{{radius}} meter</ion-badge>
     </ion-item>
     <ion-item class="radiusInput">
-      <ion-range min="20" max="5000" step="10" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
+      <ion-range min="100" max="10000" step="100" [(ngModel)]="radius" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
         <ion-icon range-left small color="white" name="locate"></ion-icon>
         <ion-icon range-right color="white" name="locate"></ion-icon>
       </ion-range>

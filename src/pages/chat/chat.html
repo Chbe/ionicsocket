@@ -39,13 +39,13 @@
           <span class="username">
           <strong [style.color]="getUsernameColor(data.username)">{{data.username}}: </strong>
           </span>
-          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image" [innerHTML]="data.message | username"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%; filter: blur(2px);"/></ion-thumbnail></ion-item></span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image" ><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%; filter: blur(2px);"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="!data.image" [innerHTML]="data.message | username"></span>
         </div>
         <span class="timestampThem" *ngIf="data.username !== username">{{data.distance}} | {{data.timestamp}}</span>
 
         <div class="from-me" *ngIf="data.username === username">
-          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image" [innerHTML]="data.message | username"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item></span>
+          <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="data.image"><ion-item><ion-thumbnail (press)="pressEvent(data.image)" (touchend)="touchEnd()"><img src="{{data.image}}" style="border-radius: 25%;"/></ion-thumbnail></ion-item>{{data.message}}</span>
           <span class="" style="word-wrap: break-word; font-size: large;" *ngIf="!data.image" [innerHTML]="data.message | username"></span>
         </div>
         <span class="timestampMe" *ngIf="data.username === username">{{data.timestamp}}</span>

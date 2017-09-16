@@ -5,14 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-content class="main-view">
-  <div class="overlay" (click)="closeModal()"></div>
+  <div class="customOverlay" (click)="closeModal()"></div>
   <div class="modal_content">
     <ion-icon name="close" color="main" (click)="closeModal()"></ion-icon>
     <ion-item>
       <ion-badge color="pinkish" class="loginBadge">{{params}} meter</ion-badge>
     </ion-item>
     <ion-item class="radiusInput">
-      <ion-range min="20" max="5000" step="10" [(ngModel)]="params" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
+      <ion-range min="100" max="10000" step="100" [(ngModel)]="params" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
         <ion-icon range-left small color="main" name="locate"></ion-icon>
         <ion-icon range-right color="main" name="locate"></ion-icon>
       </ion-range>

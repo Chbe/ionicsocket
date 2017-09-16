@@ -18,7 +18,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 })
 export class Login {
   username: any;
-  radius: number = 200;
+  radius: number = 2000;
   hide: boolean = false;
   placeholder: string = 'Type nickname...'
 
