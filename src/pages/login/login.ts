@@ -20,7 +20,7 @@ export class Login {
   username: any;
   radius: number = 200;
   hide: boolean = false;
-  placeholder: string = 'Choose a username...'
+  placeholder: string = 'Type nickname...'
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private toastCtrl: ToastController, private cameraPreview: CameraPreview, private platform: Platform, private keyboard: Keyboard) {
     if(this.navParams.get('data') === 'login fail') {
