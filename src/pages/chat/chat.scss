@@ -287,7 +287,7 @@ page-chat {
     .from-me {
 	    position:relative;
     	padding:10px 20px;
-    	color:white; 
+    	// color:white; 
     	background:#E1AEE5;
     	border-radius:5px;
         margin-right: 1em;
@@ -380,4 +380,9 @@ page-chat {
                 display:block;
             }  
     }
+}
+
+.pipeUsername {
+    color: #97F2F7;
+    text-decoration-line: underline;
 }
