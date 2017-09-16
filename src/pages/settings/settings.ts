@@ -15,7 +15,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class SettingsPage {
 
-  params: any;
+  params: number;
 
   constructor(private viewCtrl: ViewController, private navParams: NavParams) {
   }
@@ -26,10 +26,9 @@ export class SettingsPage {
   }
 
   closeModal() {
-    var dismissData = {
+    let dismissData = {
       radius: this.params
     };
-
    this.viewCtrl.dismiss(dismissData);
   }
 

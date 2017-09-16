@@ -15,6 +15,11 @@ page-settings {
         justify-content: center;
         background: rgba(0, 0, 0, 0);
     }
+
+    .item-md {
+      background-color: rgba(255, 255, 255, 0);
+    }
+
     .item-md.item-block .item-inner {
         border: none;
     }
@@ -60,10 +65,10 @@ page-settings {
         margin: 0 auto;
         padding: 10px;
         color: #333;
-        background: #e8e8e8;
-        background: -moz-linear-gradient(top, #fff 0%, #e8e8e8 100%);
-        background: -webkit-linear-gradient(top, #fff 0%, #e8e8e8 100%);
-        background: linear-gradient(to bottom, #fff 0%, #e8e8e8 100%);
+        background: rgb(148, 224, 207) 100%;
+        background: -moz-linear-gradient(top, #fff 0%, rgb(148, 224, 207) 100%);
+        background: -webkit-linear-gradient(top, #fff 0%, rgb(148, 224, 207) 100%);
+        background: linear-gradient(to bottom, #fff 0%, rgb(148, 224, 207) 100%);
         border-radius: 5px;
         box-shadow: 0 2px 3px rgba(51, 51, 51, .35);
         box-sizing: border-box;

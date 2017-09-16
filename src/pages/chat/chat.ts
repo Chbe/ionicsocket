@@ -320,15 +320,13 @@ export class Chat {
       radius: this.radius
     }
 
-    const modal = this.modalCtrl.create('SettingsPage', { data: paramData }, {
-      cssClass: 'modalContent'
+    const modal = this.modalCtrl.create('SettingsPage', { data: paramData }, { enableBackdropDismiss: false });
+
+    modal.onDidDismiss(data => {
+      this.radius = data.radius;
     });
 
     modal.present();
-
-    modal.onWillDismiss((data) => {
-      this.radius = data.radius;
-    });
 
     // {
     //   let alert = this.alertCtrl.create({
