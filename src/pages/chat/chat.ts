@@ -1,5 +1,5 @@
 import { Component, NgZone, ViewChild, } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App, ModalOptions } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App, ModalOptions, Platform } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
@@ -55,7 +55,7 @@ export class Chat {
     '#FF00FF', '#808000',
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private apiService: ApiService, public modalCtrl: ModalController) {
+  constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private apiService: ApiService, public modalCtrl: ModalController) {
     this.username = navParams.get('username');
     this.radius = navParams.get('radius');
   }
@@ -102,23 +102,28 @@ export class Chat {
         // msg = this.decrypt(msg);
         console.log(msg);
         msg.timestamp = this.formatDate(msg.timestamp);
-        var dis = this.getDistance(msg.latitude, msg.longitude);
-        msg.distance = Math.round(dis * 10) / 10;
-        var x = msg.distance;
+        if (msg.distance === 'website') {
+          msg.distance = 'somewhere';
+        }
+        else {
+          var dis = this.getDistance(msg.latitude, msg.longitude);
+          msg.distance = Math.round(dis * 10) / 10;
+          var x = msg.distance;
 
-        if (msg.distance <= this.radius) {
-          if (x <= 100.0) {
-            msg.distance = 'very close';
-          }
-          else if (x <= 300.0 && x >= 100.1) {
-            msg.distance = 'close';
-          }
+          if (msg.distance <= this.radius) {
+            if (x <= 100.0) {
+              msg.distance = 'very close';
+            }
+            else if (x <= 300.0 && x >= 100.1) {
+              msg.distance = 'close';
+            }
 
-          else if (x <= 500.0 && x >= 300.1) {
-            msg.distance = 'nearby';
-          }
-          else {
-            msg.distance = '>500m away'
+            else if (x <= 500.0 && x >= 300.1) {
+              msg.distance = 'nearby';
+            }
+            else {
+              msg.distance = '>500m away'
+            }
           }
           this.messages.push(msg);
           this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
@@ -180,6 +185,10 @@ export class Chat {
       distance: null,
       timestamp: Date.now()
     };
+
+    if (!this.platform.is('cordova')) {
+      data.distance = 'website';
+    }
 
     // var cipher =  await this.encrypt(JSON.stringify(data));
 
@@ -311,7 +320,9 @@ export class Chat {
       radius: this.radius
     }
 
-    const modal = this.modalCtrl.create('SettingsPage', { data: paramData });
+    const modal = this.modalCtrl.create('SettingsPage', { data: paramData }, {
+      cssClass: 'modalContent'
+    });
 
     modal.present();
 

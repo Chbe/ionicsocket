@@ -4,9 +4,9 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<div class="customModal">
-  <div class="modalContent">
-    <ion-icon name="close" (click)="closeModal()"></ion-icon>
+<ion-content class="main-view">
+  <div class="overlay" (click)="closeModal()"></div>
+  <div class="modal_content">
     <ion-item>
       <ion-badge color="pinkish" class="loginBadge">{{params}} meter</ion-badge>
     </ion-item>
@@ -17,5 +17,4 @@
       </ion-range>
     </ion-item>
   </div>
-  <div class="close-background" (click)="closeModal()"></div>
-</div>
+</ion-content>
