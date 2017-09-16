@@ -1,0 +1,69 @@
+page-settings {
+
+    .scroll-content {
+        background: white;
+        border-top: 1px solid #e1aee5;
+        border-top-left-radius: 3%;
+        border-top-right-radius: 3%;
+    }
+
+    .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+        display: none;
+    }
+
+    .header-ios::after, .tabs-ios[tabsPlacement="top"] > .tabbar::after, .footer-ios::before, .tabs-ios[tabsPlacement="bottom"] > .tabbar::before {
+        display: none;
+    }
+
+    .loginBadge {
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+    }
+
+    .customModal {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    
+        .modalContent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 500;
+            width: 90%;
+            min-width: 300px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: auto;
+            background-color: #FFF;
+    
+            > ion-icon:first-of-type {
+                position: absolute;
+                top: 0;
+                right: 5px;
+                z-index: 1;
+                cursor: pointer;
+                font-size: 30px;
+            }
+    
+            > h2 {
+                text-align: center;
+            }
+        }
+    
+        .close-background {
+            z-index: 400;
+            background-color: rgba(0,0,0,0.2);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+
+
+}

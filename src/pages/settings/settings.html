@@ -1,0 +1,21 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="customModal">
+  <div class="modalContent">
+    <ion-icon name="close" (click)="closeModal()"></ion-icon>
+    <ion-item>
+      <ion-badge color="pinkish" class="loginBadge">{{params}} meter</ion-badge>
+    </ion-item>
+    <ion-item class="radiusInput">
+      <ion-range min="20" max="5000" step="10" [(ngModel)]="params" [ngModelOptions]="{standalone: true}" color="pinkish" id="rangeInput">
+        <ion-icon range-left small color="main" name="locate"></ion-icon>
+        <ion-icon range-right color="main" name="locate"></ion-icon>
+      </ion-range>
+    </ion-item>
+  </div>
+  <div class="close-background" (click)="closeModal()"></div>
+</div>

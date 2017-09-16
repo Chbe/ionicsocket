@@ -1,5 +1,5 @@
 import { Component, NgZone, ViewChild, } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App, ModalOptions } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
@@ -306,42 +306,55 @@ export class Chat {
 
   radiusModal(ev) {
     ev.close();
-    {
-      let alert = this.alertCtrl.create({
-        title: 'Change radius',
-        subTitle: 'Decide on how far away you want to receive messages from, in meters',
-        message: 'Current radius: ' + this.radius,
-        inputs: [
-          {
-            name: 'radius',
-            min: 20,
-            type: 'range',
-            max: 5000,
-            id: 'inputRange',
-          }
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'Save',
-            handler: data => {
-              if (Number(data.radius) >= 20 && Number(data.radius) <= 5000) {
-                this.radius = data.radius;
-                console.log(data, data.radius);
-              }
-            }
-          }
-        ]
-      });
-      alert.present();
 
+    const paramData = {
+      radius: this.radius
     }
+
+    const modal = this.modalCtrl.create('SettingsPage', { data: paramData });
+
+    modal.present();
+
+    modal.onWillDismiss((data) => {
+      this.radius = data.radius;
+    });
+
+    // {
+    //   let alert = this.alertCtrl.create({
+    //     title: 'Change radius',
+    //     subTitle: 'Decide on how far away you want to receive messages from, in meters',
+    //     message: 'Current radius: ' + this.radius,
+    //     inputs: [
+    //       {
+    //         name: 'radius',
+    //         min: 20,
+    //         type: 'range',
+    //         max: 5000,
+    //         id: 'inputRange',
+    //       }
+    //     ],
+    //     buttons: [
+    //       {
+    //         text: 'Cancel',
+    //         role: 'cancel',
+    //         handler: data => {
+    //           console.log('Cancel clicked');
+    //         }
+    //       },
+    //       {
+    //         text: 'Save',
+    //         handler: data => {
+    //           if (Number(data.radius) >= 20 && Number(data.radius) <= 5000) {
+    //             this.radius = data.radius;
+    //             console.log(data, data.radius);
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   });
+    //   alert.present();
+
+    // }
   }
 
 
