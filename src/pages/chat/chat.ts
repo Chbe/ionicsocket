@@ -97,6 +97,44 @@ export class Chat {
       this.id = data.data;
     });
 
+    this.socket.on('old msgs', (msg) => {
+
+      this.zone.run(() => {
+        // msg = this.decrypt(msg);
+        for (var i = msg.length - 1; i >= 0; i--) {
+          console.log(msg[i]);
+          msg[i].timestamp = this.formatDate(msg[i].timestamp);
+          if (msg[i].distance === 'website') {
+            msg[i].distance = 'somewhere';
+          }
+          else {
+            var dis = this.getDistance(msg[i].latitude, msg[i].longitude);
+            msg[i].distance = Math.round(dis * 10) / 10;
+            var x = msg[i].distance;
+
+            if (msg[i].distance <= this.radius) {
+              if (x <= 100.0) {
+                msg[i].distance = 'very close';
+              }
+              else if (x <= 300.0 && x >= 100.1) {
+                msg[i].distance = 'close';
+              }
+
+              else if (x <= 500.0 && x >= 300.1) {
+                msg[i].distance = 'nearby';
+              }
+              else {
+                msg[i].distance = '>500m away'
+              }
+            }
+            this.messages.push(msg[i]);
+            this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+          }
+        }
+      });
+
+    });
+
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
         // msg = this.decrypt(msg);
