@@ -26,7 +26,7 @@
     <button ion-fab mini color="pinkish"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
       <button ion-fab color="white" (tap)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
-      <button ion-fab color="white" (tap)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
+      <!-- <button ion-fab color="white" (tap)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button> -->
       <button ion-fab color="white" (tap)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
@@ -63,7 +63,7 @@
 
 <ion-footer>
   <form #f="ngForm">
-    <ion-grid>
+    <ion-grid #grid>
       <ion-row>
         <ion-col class="messageCol" *ngIf="!base64Image">
           <ion-item>
