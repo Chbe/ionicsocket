@@ -108,7 +108,7 @@ export class Chat {
 
       this.socket.on('old msgs', (msg) => {
 
-        this.zone.run(() => {
+        // this.zone.run(() => {
           // msg = this.decrypt(msg);
           for (var i = msg.length - 1; i >= 0; i--) {
             console.log(msg[i]);
@@ -136,11 +136,14 @@ export class Chat {
                   msg[i].distance = '>500m away'
                 }
               }
+              else {
+                msg[i].distance = this.city;
+              }
               this.messages.push(msg[i]);
               this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
             }
           }
-        });
+        // });
 
       });
     }
@@ -154,6 +157,8 @@ export class Chat {
         }
         if (msg.distance === 'website') {
           msg.distance = 'somewhere';
+          this.messages.push(msg);
+          this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
         }
         else {
           var dis = this.getDistance(msg.latitude, msg.longitude);
@@ -174,9 +179,9 @@ export class Chat {
             else {
               msg.distance = '>500m away'
             }
+            this.messages.push(msg);
+            this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
           }
-          this.messages.push(msg);
-          this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
         }
       });
     });
