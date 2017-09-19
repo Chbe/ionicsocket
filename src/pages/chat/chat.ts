@@ -1,5 +1,5 @@
-import { Component, NgZone, ViewChild, } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App, ModalOptions, Platform } from 'ionic-angular';
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content, AlertController, ToastController, ModalController, App, ModalOptions, Platform, Events } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import * as io from 'socket.io-client';
 import { Location } from '../../providers/location';
@@ -42,6 +42,7 @@ export class Chat {
   messageImage: any;
   onlineUsers: number;
   id: any;
+  loggedIn: boolean;
   private key: string = 'mycryptswag1337';
   COLORS = [
     '#FF0000',
@@ -55,9 +56,15 @@ export class Chat {
     '#FF00FF', '#808000',
   ];
 
-  constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private apiService: ApiService, public modalCtrl: ModalController) {
+  constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams, private locationTracker: Location, private app: App, private events: Events, private alertCtrl: AlertController, private toastCtrl: ToastController, private camera: Camera, private apiService: ApiService, public modalCtrl: ModalController) {
     this.username = navParams.get('username');
     this.radius = navParams.get('radius');
+
+    this.events.subscribe('picture:taken', (data) => {
+      //do whatever you need to do with your data:
+      console.log("event", data);
+      this.base64Image = data.picture;
+    });
   }
 
   ngOnInit() {
@@ -75,71 +82,76 @@ export class Chat {
   }
 
   ionViewWillEnter() {
-    this.socket = io.connect(this.socketHost);
+    if (!this.loggedIn) {
+      this.socket = io.connect(this.socketHost);
 
-    this.socket.emit('request login', this.username);
+      this.socket.emit('request login', this.username);
 
-    this.socket.on('login success', (data) => {
-      this.socket.emit('add user', this.username, this.city);
-    });
-
-    this.socket.on('login fail', (data) => {
-      this.app.getRootNav().setRoot('Login', { data: 'login fail' });
-    });
-
-    this.socket.on('user count', (data) => {
-      console.log("data yao", data);
-      this.onlineUsers = data.numbers;
-      // this.socket.emit('request keys');
-    });
-
-    this.socket.on('event keys', (data) => {
-      this.id = data.data;
-    });
-
-    this.socket.on('old msgs', (msg) => {
-
-      this.zone.run(() => {
-        // msg = this.decrypt(msg);
-        for (var i = msg.length - 1; i >= 0; i--) {
-          console.log(msg[i]);
-          msg[i].timestamp = this.formatDate(msg[i].timestamp);
-          if (msg[i].distance === 'website') {
-            msg[i].distance = 'somewhere';
-          }
-          else {
-            var dis = this.getDistance(msg[i].latitude, msg[i].longitude);
-            msg[i].distance = Math.round(dis * 10) / 10;
-            var x = msg[i].distance;
-
-            if (msg[i].distance <= this.radius) {
-              if (x <= 100.0) {
-                msg[i].distance = 'very close';
-              }
-              else if (x <= 300.0 && x >= 100.1) {
-                msg[i].distance = 'close';
-              }
-
-              else if (x <= 500.0 && x >= 300.1) {
-                msg[i].distance = 'nearby';
-              }
-              else {
-                msg[i].distance = '>500m away'
-              }
-            }
-            this.messages.push(msg[i]);
-            this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
-          }
-        }
+      this.socket.on('login success', (data) => {
+        this.socket.emit('add user', this.username, this.city);
+        this.loggedIn = true;
       });
 
-    });
+      this.socket.on('login fail', (data) => {
+        this.app.getRootNav().setRoot('Login', { data: 'login fail' });
+      });
+
+      this.socket.on('user count', (data) => {
+        console.log("data yao", data);
+        this.onlineUsers = data.numbers;
+        // this.socket.emit('request keys');
+      });
+
+      this.socket.on('event keys', (data) => {
+        this.id = data.data;
+      });
+
+      this.socket.on('old msgs', (msg) => {
+
+        this.zone.run(() => {
+          // msg = this.decrypt(msg);
+          for (var i = msg.length - 1; i >= 0; i--) {
+            console.log(msg[i]);
+            msg[i].timestamp = this.formatDate(msg[i].timestamp);
+            if (msg[i].distance === 'website') {
+              msg[i].distance = 'somewhere';
+            }
+            else {
+              var dis = this.getDistance(msg[i].latitude, msg[i].longitude);
+              msg[i].distance = Math.round(dis * 10) / 10;
+              var x = msg[i].distance;
+
+              if (msg[i].distance <= this.radius) {
+                if (x <= 100.0) {
+                  msg[i].distance = 'very close';
+                }
+                else if (x <= 300.0 && x >= 100.1) {
+                  msg[i].distance = 'close';
+                }
+
+                else if (x <= 500.0 && x >= 300.1) {
+                  msg[i].distance = 'nearby';
+                }
+                else {
+                  msg[i].distance = '>500m away'
+                }
+              }
+              this.messages.push(msg[i]);
+              this.content.scrollTo(0, this.content.getContentDimensions().scrollHeight);
+            }
+          }
+        });
+
+      });
+    }
 
     this.socket.on("new message", (msg) => {
       this.zone.run(() => {
         // msg = this.decrypt(msg);
         console.log(msg);
-        msg.timestamp = this.formatDate(msg.timestamp);
+        if (typeof msg.timestamp === "number") {
+          msg.timestamp = this.formatDate(msg.timestamp);
+        }
         if (msg.distance === 'website') {
           msg.distance = 'somewhere';
         }
@@ -282,6 +294,7 @@ export class Chat {
   }
 
   formatDate(dateObj) {
+    console.log(dateObj);
     var d = new Date(dateObj);
     var hours = d.getHours();
     var minutes = d.getMinutes().toString();
@@ -314,18 +327,18 @@ export class Chat {
 
   takePicture(ev) {
     ev.close();
-    this.camera.getPicture({
-      destinationType: this.camera.DestinationType.DATA_URL,
-      targetWidth: 1000,
-      targetHeight: 1000,
-      saveToPhotoAlbum: true
+    // this.camera.getPicture({
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   targetWidth: 1000,
+    //   targetHeight: 1000,
+    //   saveToPhotoAlbum: true
 
-    }).then((imageData) => {
-      this.base64Image = "data:image/jpeg;base64," + imageData;
-    }, (err) => {
-      console.log(err);
-    });
-
+    // }).then((imageData) => {
+    //   this.base64Image = "data:image/jpeg;base64," + imageData;
+    // }, (err) => {
+    //   console.log(err);
+    // });
+    this.navCtrl.push('CameraPage');
   }
 
   chooseImageFromGallery(ev) {

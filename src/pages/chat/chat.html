@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <ion-item>
-      <ion-label class="countryInfo" (click)="eventsNearby()">
+      <ion-label class="countryInfo" (tap)="eventsNearby()">
         <ion-icon name="pin"></ion-icon>
         {{city}}
       </ion-label>
@@ -25,9 +25,9 @@
   <ion-fab #fabis right>
     <button ion-fab mini color="pinkish"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
-      <button ion-fab color="white" (click)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
-      <button ion-fab color="white" (click)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
-      <button ion-fab color="white" (click)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
+      <button ion-fab color="white" (tap)="takePicture(fabis)"><ion-icon name="camera"></ion-icon></button>
+      <button ion-fab color="white" (tap)="chooseImageFromGallery(fabis)"><ion-icon name="image"></ion-icon></button>
+      <button ion-fab color="white" (tap)="radiusModal(fabis)"><ion-icon name="locate"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 
@@ -83,8 +83,8 @@
           </ion-item>
         </ion-col>
         <ion-col id="sendBtn">
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="pinkish" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
-          <button (click)="chatSend(f.value, f.valid)" ion-button color="pinkish" full *ngIf="base64Image">send</button>
+          <button (tap)="chatSend(f.value, f.valid)" ion-button color="pinkish" full [disabled]="!f.valid" *ngIf="!base64Image">send</button>
+          <button (tap)="chatSend(f.value, f.valid)" ion-button color="pinkish" full *ngIf="base64Image">send</button>
         </ion-col>
       </ion-row>
     </ion-grid>

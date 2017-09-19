@@ -5,9 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-content class="main-view">
-  <div class="customOverlay" (click)="closeModal()"></div>
+  <div class="customOverlay" (tap)="closeModal()"></div>
   <div class="modal_content">
-    <ion-icon name="close" color="main" (click)="closeModal()"></ion-icon>
+    <ion-icon name="close" color="main" (tap)="closeModal()"></ion-icon>
     <ion-item>
       <ion-badge color="pinkish" class="loginBadge">{{params}} meter</ion-badge>
     </ion-item>
