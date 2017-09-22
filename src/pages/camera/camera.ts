@@ -70,7 +70,7 @@ export class CameraPage {
       this.picture = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       console.log(err);
-      this.picture = 'assets/test.jpg';
+      this.picture = undefined;
     });
   }
 
@@ -102,8 +102,8 @@ export class CameraPage {
     }
   }
 
-  back(pic?) {
-    if (pic) {
+  back() {
+    if (this.picture) {
       let picNav = {
         picture: this.picture
       }

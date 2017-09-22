@@ -13,9 +13,11 @@
       <!-- <button ion-fab color="white" (click)="effects(fabis)"><ion-icon color="pinkish" name="color-wand"></ion-icon></button> -->
     </ion-fab-list>
   </ion-fab>
-  <ion-fab #fabis left>
-    <button *ngIf="!picture" ion-fab mini color="main"><ion-icon name="backspace" color="white" (tap)="back()"></ion-icon></button>
-    <button *ngIf="picture" ion-fab mini color="main"><ion-icon name="checkmark" color="white" (tap)="back()"></ion-icon></button>
+  <ion-fab #fabis left (tap)="back()">
+    <button *ngIf="picture" ion-fab mini color="main"><ion-icon name="checkmark" color="white"></ion-icon></button>
+  </ion-fab>
+  <ion-fab #fabis left (tap)="back()">
+    <button *ngIf="!picture" ion-fab mini color="main"><ion-icon name="backspace" color="white"></ion-icon></button>
   </ion-fab>
   <img *ngIf="picture" class="pictureView" [src]="picture" />
 </div>
